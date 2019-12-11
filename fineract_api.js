@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const request = require('request');
-const req = request.defaults();
+const axios = require('axios');
 class FineractAPI {
     defaultHeaders(isDev = false) {
         return {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json, text/plain, */*',
-            'Fineract-Platform-TenantId': this._config.client_tenant_id
+            'Fineract-Platform-TenantId': this._config.client_tenant_id,
+            'Accept-Encoding': "gzip, deflate"
         };
     }
     constructor(config) {
@@ -15,11 +13,16 @@ class FineractAPI {
     }
     post(path, body) {
         return new Promise((resolve, reject) => {
-            req.post({
-                uri: `${this._config.client_base_url}/${path}`,
+            axios({
+                method: "post",
+                url: `${this._config.client_base_url}/${path}`,
                 headers: this.defaultHeaders(),
-                body: JSON.stringify(body),
-                json: true
+                data: body,
+                responseType: 'json',
+                auth: {
+                    username: this._config.client_username,
+                    password: this._config.client_password
+                }
             }, function (error, response, b) {
                 error ? reject(error) : resolve(response);
             }).auth(this._config.client_username, this._config.client_password, false);
@@ -27,15 +30,18 @@ class FineractAPI {
     }
     get(path, query) {
         return new Promise((resolve, reject) => {
-            req.get({
-                uri: `${this._config.client_base_url}/${path}`,
+            let url = `${this._config.client_base_url}/${path}`;
+            let headers = this.defaultHeaders();
+            axios({
+                method: 'get',
+                url,
                 headers: this.defaultHeaders(),
-                qs: query,
-                json: true
-            }, function (error, response, b) {
-                error ? reject(error) : resolve(response);
-            }).auth(this._config.client_username, this._config.client_password, false);
-            ;
+                responseType: 'json',
+                auth: {
+                    username: this._config.client_username,
+                    password: this._config.client_password
+                }
+            }).then(resolve).catch(reject);
         });
     }
 }

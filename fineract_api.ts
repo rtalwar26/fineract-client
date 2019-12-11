@@ -1,8 +1,8 @@
-const request = require('request');
-const req = request.defaults();
+const axios = require('axios');
+
 
 export interface FineractAPIConfig {
-    client_base_url:string,    
+    client_base_url: string,
     client_username: string,
     client_password: string,
     client_tenant_id: string
@@ -14,13 +14,12 @@ export default class FineractAPI {
 
     private defaultHeaders(isDev: boolean = false): Object {
         return {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json, text/plain, */*',
-            'Fineract-Platform-TenantId':this._config.client_tenant_id
-           
+            'Fineract-Platform-TenantId': this._config.client_tenant_id,
+            'Accept-Encoding': "gzip, deflate"
+
         }
     }
-   
+
     constructor(config: FineractAPIConfig) {
         this._config = config;
 
@@ -30,11 +29,16 @@ export default class FineractAPI {
         return new Promise((resolve, reject) => {
 
 
-            req.post({
-                uri: `${this._config.client_base_url}/${path}`,                
+            axios({
+                method: "post",
+                url: `${this._config.client_base_url}/${path}`,
                 headers: this.defaultHeaders(),
-                body: JSON.stringify(body),
-                json:true
+                data: body,
+                responseType: 'json',
+                auth: {
+                    username: this._config.client_username,
+                    password: this._config.client_password
+                }
             }, function (error, response, b) {
                 error ? reject(error) : resolve(response);
             }
@@ -43,17 +47,19 @@ export default class FineractAPI {
     }
     get(path: string, query: any): Promise<any> {
         return new Promise((resolve, reject) => {
+            let url = `${this._config.client_base_url}/${path}`;
+            let headers = this.defaultHeaders();
 
-
-            req.get({
-                uri: `${this._config.client_base_url}/${path}`,                
+            axios({
+                method: 'get',
+                url,
                 headers: this.defaultHeaders(),
-                qs: query,
-                json:true
-            }, function (error, response, b) {
-                error ? reject(error) : resolve(response);
-            }
-            ).auth(this._config.client_username, this._config.client_password, false);;
+                responseType: 'json',
+                auth: {
+                    username: this._config.client_username,
+                    password: this._config.client_password
+                }
+            }).then(resolve).catch(reject)
         });
     }
 
