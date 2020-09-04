@@ -3,11 +3,11 @@
 ## Usage
 
 ```javascript
-import { CBSAPI } from "fineract-client";
+import { FineractAPI } from "fineract-client";
 
 let config = { client_username: "xxx", client_tenant_id: 'default', client_base_url: "https://xxxx.in/fineract-provider/api/v1", client_password: "xxx" };
 
-   let response = await (new CBSAPI(config)).get('clients', args);
+   let response = await (new FineractAPI(config)).get('clients', args);
     
     let results =  response.body && response.body.pageItems;
 

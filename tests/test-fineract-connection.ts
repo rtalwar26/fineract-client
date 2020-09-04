@@ -1,4 +1,4 @@
-import { CBSAPI } from "..";
+import { FineractAPI } from "..";
 
 
 
@@ -10,6 +10,6 @@ const config = {
 };
 
 (async () => {
-    let response = await (new CBSAPI(config)).get('clients', { externalId: '8971466188' });
+    let response = await (new FineractAPI(config)).get('clients', { externalId: '8971466188' });
     return response.body;
 })().then(data => console.log({ data }));

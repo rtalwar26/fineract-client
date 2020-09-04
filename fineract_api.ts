@@ -53,7 +53,7 @@ export default class FineractAPI {
             axios({
                 method: 'get',
                 url,
-                headers: this.defaultHeaders(),
+                headers: headers,
                 responseType: 'json',
                 auth: {
                     username: this._config.client_username,

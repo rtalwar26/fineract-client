@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios = require('axios');
 class FineractAPI {
+    constructor(config) {
+        this._config = config;
+    }
     defaultHeaders(isDev = false) {
         return {
             'Fineract-Platform-TenantId': this._config.client_tenant_id,
             'Accept-Encoding': "gzip, deflate"
         };
-    }
-    constructor(config) {
-        this._config = config;
     }
     post(path, body) {
         return new Promise((resolve, reject) => {
@@ -35,7 +35,7 @@ class FineractAPI {
             axios({
                 method: 'get',
                 url,
-                headers: this.defaultHeaders(),
+                headers: headers,
                 responseType: 'json',
                 auth: {
                     username: this._config.client_username,

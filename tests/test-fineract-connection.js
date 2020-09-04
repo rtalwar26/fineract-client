@@ -8,6 +8,6 @@ const config = {
     client_tenant_id: "default"
 };
 (async () => {
-    let response = await (new __1.CBSAPI(config)).get('clients', { externalId: '8971466188' });
+    let response = await (new __1.FineractAPI(config)).get('clients', { externalId: '8971466188' });
     return response.body;
 })().then(data => console.log({ data }));
