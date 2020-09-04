@@ -19,12 +19,12 @@ constructor(fineract_obj:FineractAPI)
    this.fineract_obj=fineract_obj;
 }
 
-list_loan(config:LoanConfig):any {
+async list_loan(config:LoanConfig):Promise<any> {
     let path="loans";
     let response;
-    response=this.fineract_obj.get(path,config);
+    response=await this.fineract_obj.get(path,config);
     return response;
-    console.log("response:",response);
+    
     
 }
 
