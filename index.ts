@@ -1,2 +1,2 @@
-import FineractAPI from "./fineract_api";
+import FineractAPI from "./FineractAPI";
 export { FineractAPI };

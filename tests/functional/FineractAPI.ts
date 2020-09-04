@@ -1,19 +1,19 @@
 
-import { FineractAPI } from "../..";
+import FineractAPI, { FineractAPIConfig } from "../../FineractAPI";
 import { before, after } from "intern/lib/interfaces/bdd";
 const { describe, it } = intern.getInterface('bdd');
 const { assert } = intern.getPlugin('chai');
 
-let config;
+let config: FineractAPIConfig;
 describe('FineractAPI Tests', () => {
 
     before(() => {
         require('dotenv').config();
 
         config = {
-            client_base_url: process.env.CBS_BASE_URL, //https://cbsdemo.kred.cloud/fineract-provider/api/v1
-            client_username: process.env.CBS_USER,
-            client_password: process.env.CBS_PASSWORD,
+            client_base_url: process.env.CBS_BASE_URL as string,
+            client_username: process.env.CBS_USER as string,
+            client_password: process.env.CBS_PASSWORD as string,
             client_tenant_id: "default"
         };
     });

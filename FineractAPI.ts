@@ -25,27 +25,24 @@ export default class FineractAPI {
 
 
     }
-    post(path: string, body: any): Promise<any> {
-        return new Promise((resolve, reject) => {
+    async post(path: string, body: any): Promise<any> {
 
 
-            axios({
-                method: "post",
-                url: `${this._config.client_base_url}/${path}`,
-                headers: this.defaultHeaders(),
-                data: body,
-                responseType: 'json',
-                auth: {
-                    username: this._config.client_username,
-                    password: this._config.client_password
-                }
-            }, function (error, response, b) {
-                error ? reject(error) : resolve(response);
+
+        return axios({
+            method: "post",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: this.defaultHeaders(),
+            data: body,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
             }
-            ).auth(this._config.client_username, this._config.client_password, false);
+
         });
     }
-    get(path: string, query: any): Promise<any> {
+    async get(path: string, query: any): Promise<any> {
 
         let url = `${this._config.client_base_url}/${path}`;
         let headers = this.defaultHeaders();

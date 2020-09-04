@@ -11,24 +11,20 @@ class FineractAPI {
             'Accept-Encoding': "gzip, deflate"
         };
     }
-    post(path, body) {
-        return new Promise((resolve, reject) => {
-            axios({
-                method: "post",
-                url: `${this._config.client_base_url}/${path}`,
-                headers: this.defaultHeaders(),
-                data: body,
-                responseType: 'json',
-                auth: {
-                    username: this._config.client_username,
-                    password: this._config.client_password
-                }
-            }, function (error, response, b) {
-                error ? reject(error) : resolve(response);
-            }).auth(this._config.client_username, this._config.client_password, false);
+    async post(path, body) {
+        return axios({
+            method: "post",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: this.defaultHeaders(),
+            data: body,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
         });
     }
-    get(path, query) {
+    async get(path, query) {
         let url = `${this._config.client_base_url}/${path}`;
         let headers = this.defaultHeaders();
         return axios({

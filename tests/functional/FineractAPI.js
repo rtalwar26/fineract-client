@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const __1 = require("../..");
+const FineractAPI_1 = require("../../FineractAPI");
 const bdd_1 = require("intern/lib/interfaces/bdd");
 const { describe, it } = intern.getInterface('bdd');
 const { assert } = intern.getPlugin('chai');
@@ -17,7 +17,7 @@ describe('FineractAPI Tests', () => {
     });
     it(`FineractAPI :Search Clients Success Response`, () => {
         return (async () => {
-            let response = await (new __1.FineractAPI(config)).get('search', { exactMatch: "false", query: '8971466188', resource: "clients,clientIdentifiers" });
+            let response = await (new FineractAPI_1.default(config)).get('search', { exactMatch: "false", query: '8971466188', resource: "clients,clientIdentifiers" });
             assert.ok(response.data[0].entityExternalId === "8971466188");
             return response.data;
         })();
