@@ -17,7 +17,19 @@ let config = { client_username: "xxx", client_tenant_id: 'default', client_base_
 ```
 
 ## Run Tests
+
+1. Run `npm install`
+
+2. Create `.env` file in your project's root and place the following contents
+
+```
+CBS_BASE_URL=https://xxxx.xxx.xx/fineract-provider/api/v1
+CBS_USER=my_cbs_username
+CBS_PASSWORD=my_cbs_password
+CBS_TENANT=default
+```
+3. Run `npm test`
+
 ```shell
-CBS_BASE_URL=https://xxxx.in/fineract-provider/api/v1 CBS_USER=xxx
-CBS_PASSWORD=xxxx node tests/test-fineract-connection.js
+npm test
 ```

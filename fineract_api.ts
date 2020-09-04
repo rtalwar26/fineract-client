@@ -46,21 +46,23 @@ export default class FineractAPI {
         });
     }
     get(path: string, query: any): Promise<any> {
-        return new Promise((resolve, reject) => {
-            let url = `${this._config.client_base_url}/${path}`;
-            let headers = this.defaultHeaders();
 
-            axios({
-                method: 'get',
-                url,
-                headers: headers,
-                responseType: 'json',
-                auth: {
-                    username: this._config.client_username,
-                    password: this._config.client_password
-                }
-            }).then(resolve).catch(reject)
+        let url = `${this._config.client_base_url}/${path}`;
+        let headers = this.defaultHeaders();
+
+        return axios({
+            method: 'get',
+            url: `${url}`,
+            params: query,
+            headers: headers,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
         });
+
+
     }
 
 
