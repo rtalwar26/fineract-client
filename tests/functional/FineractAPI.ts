@@ -14,7 +14,7 @@ describe('FineractAPI Tests', () => {
             client_base_url: process.env.CBS_BASE_URL as string,
             client_username: process.env.CBS_USER as string,
             client_password: process.env.CBS_PASSWORD as string,
-            client_tenant_id: "default"
+            client_tenant_id: process.env.CBS_TENANT as string
         };
     });
 

@@ -12,7 +12,7 @@ describe('FineractAPI Tests', () => {
             client_base_url: process.env.CBS_BASE_URL,
             client_username: process.env.CBS_USER,
             client_password: process.env.CBS_PASSWORD,
-            client_tenant_id: "default"
+            client_tenant_id: process.env.CBS_TENANT
         };
     });
     it(`FineractAPI :Search Clients Success Response`, () => {
