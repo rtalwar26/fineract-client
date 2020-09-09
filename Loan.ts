@@ -177,6 +177,100 @@ export interface LoanObjectInterface {
   inArrears:boolean,
   isNPA:boolean
 }
+export interface LoanRetrieveObjInterface{
+  id:number,
+  accountNo:string,
+  status:LoanObjectStatusInterface,
+  clientId:number,
+  clientName:string,
+  clientOfficeId:number,
+  loanProductId:number,
+  loanProductName:string,
+  loanProductDescription:string,
+  loanPurposeId:number,
+  loanPurposeName:string,
+  loanOfficerId:number,
+  loanOfficerName:string,
+  loanType:LoanObjectTypeInterface,
+  currency:LoanObjectCurrencyInterface, 
+  principal:number,
+  termFrequency:number,
+  termPeriodFrequencyType:LoanObjTermPdFrequencyType ,
+  numberOfRepayments:number,
+  repaymentEvery:number,
+  repaymentFrequencyType:LoanObjRepaymentFrequencyType,
+  interestRatePerPeriod:number,
+  interestRateFrequencyType:LoanObjInterestRateFrequencyType ,
+  annualInterestRate:number,
+  amortizationType:LoanObjAmortizationType,
+  interestType:LoanObjInterestType ,
+  interestCalculationPeriodType:LoanObjInterestCalculationPeriodType,
+  transactionProcessingStrategyId:number,
+  timeline:LoanObjTimeline ,
+  summary:LoanObjSummary,    
+  linkedAccount:LoanObjLinkedAccount,
+  disbursementDetails:[LoanObjDisbursementDetails],
+  fixedEmiAmount:number,
+  maxOutstandingLoanBalance:number,
+  canDisburse:boolean,
+  emiAmountVariations:Array<number>,                //kindly review this type
+  inArrears:boolean,
+  isNPA:boolean,
+  overdueCharges:[LoanObjOverDueCharges]        
+}
+export interface LoanObjDisbursementDetails{
+  id:number,
+  expectedDisbursementDate:Array<number>,
+  principal:number,
+  approvedPrincipal:number
+}
+export interface LoanObjOverDueCharges{
+  id:number,
+  name:string,
+  active:boolean,
+  penalty:boolean,
+  currency:LoanObjectCurrencyInterface ,
+  amount:number,
+  chargeTimeType:LoanObjChargeTimeType,
+  chargeAppliesTo:LoanObjChargeAppliesTo,
+  chargeCalculationType:LoanObjChargeCalType,
+  chargePaymentMode:LoanObjChargePaymentMode,
+  feeInterval:number,
+  feeFrequency:LoanObjFeeFrequency
+
+}  
+export interface LoanObjChargeTimeType{
+    id:number,
+    code:string,   // "chargeTimeType.overdueInstallment",
+    value:string
+}  
+export interface LoanObjChargeTimeType{
+  id:number,
+  code:string,                      //"chargeTimeType.overdueInstallment",
+  value:string
+
+}    
+export interface LoanObjChargeAppliesTo{
+  id:number,
+  code:string,                              //"chargeAppliesTo.loan,
+  value:string
+}
+export interface LoanObjChargeCalType{
+  id:number,
+  code:string,                              //"chargeCalculationType.percent.of.amount",
+  value:string
+
+}
+export interface LoanObjChargePaymentMode{
+  id:number,
+  code:string,     //"chargepaymentmode.regular",
+  value:string                //"Regular"
+}
+export interface LoanObjFeeFrequency{
+  id:number,
+  code:string,    // "feeFrequencyperiodFrequencyType.weeks",
+  value:string //"Weeks"
+}
 export default class Loan {
 
   fineract_obj: FineractAPI
@@ -192,7 +286,7 @@ export default class Loan {
 
 
   }
-  async retrieve_loan(loan_retrive_config: LoanRetrieveConfig): Promise<any> {
+  async retrieve_loan(loan_retrive_config: LoanRetrieveConfig): Promise<LoanRetrieveObjInterface> {
     let retrieve_path = "loans/";
     let response;
     response = await this.fineract_obj.get(retrieve_path, loan_retrive_config);
