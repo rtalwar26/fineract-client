@@ -25,7 +25,7 @@ export interface LoanRetrieveConfig {
   collatoral?: string
 
 }
-export interface LoanObjectStatusInterface {
+export interface LoanStatusInterface {
 
   id: number,
   code: string,        // value  given in api doc ->loanStatusType.active", Kindly review the variable type
@@ -40,13 +40,13 @@ export interface LoanObjectStatusInterface {
   overpaid: boolean
 
 }
-export interface LoanObjectTypeInterface {
+export interface LoanTypeInterface {
   id: number,
   code: string,                 //"loanType.individual",Kindly review the variable type
   value: string                //"Individual" ,Kindly review the variable type
 
 }
-export interface LoanObjectCurrencyInterface {
+export interface LoanCurrencyInterface {
   code: string,
   name: string,
   decimalPlaces: number,
@@ -55,37 +55,37 @@ export interface LoanObjectCurrencyInterface {
   displayLabel: string
 
 }
-export interface LoanObjTermPdFrequencyType {
+export interface LoanTermPdFrequencyType {
   id: number,
   code: string,                                 //"termFrequency.periodFrequencyType.months",Kindly review the variable type
   value: string
 }
-export interface LoanObjRepaymentFrequencyType {
+export interface LoanRepaymentFrequencyType {
   id: number,
   code: string,    // "repaymentFrequency.periodFrequencyType.months",   Kindly review the variable type
   value: string   //"Months" Kindly review the variable type
 }
-export interface LoanObjInterestRateFrequencyType {
+export interface LoanInterestRateFrequencyType {
   id: number,
   code: string,                               //"interestRateFrequency.periodFrequencyType.months",Kindly review the type
   value: string
 }
-export interface LoanObjAmortizationType {
+export interface LoanAmortizationType {
   id: number,
   code: string,                            //"amortizationType.equal.installments", Kindly review the type
   value: string                               //"Equal installments"
 }
-export interface LoanObjInterestType {
+export interface LoanInterestType {
   id: number,
   code: string  //"interestType.declining.balance",
   value: string   //"Declining Balance"
 }
-export interface LoanObjInterestCalculationPeriodType {
+export interface LoanInterestCalculationPeriodType {
   id: number,
   code: string    //"interestCalculationPeriodType.same.as.repayment.period",
   value: string     // "Same as repayment period"
 }
-export interface LoanObjTimeline {
+export interface LoanTimeline {
   submittedOnDate: Array<number>,
   submittedByUsername: string,
   submittedByFirstname: string,
@@ -101,12 +101,12 @@ export interface LoanObjTimeline {
   disbursedByLastname: string,
   expectedMaturityDate: Array<number>
 }
-export interface LoanObjLinkedAccount {
+export interface LoanLinkedAccount {
   id: number,
   accountNo: string
 }
-export interface LoanObjSummary {
-  currency: LoanObjectCurrencyInterface,
+export interface LoanSummary {
+  currency: LoanCurrencyInterface,
   principalDisbursed:number,
   principalPaid:number,
   principalWrittenOff:number,
@@ -143,11 +143,11 @@ export interface LoanObjSummary {
 
 }
 
-export interface LoanObjectInterface {
+export interface LoanInterface {
 
   id: number,
   accountNo: number,
-  status: LoanObjectStatusInterface,
+  status: LoanStatusInterface,
 
   clientId: number,
   clientName: string,
@@ -155,32 +155,32 @@ export interface LoanObjectInterface {
   loanProductId: number,
   loanProductName: string,
   loanProductDescription: string,
-  loanType: LoanObjectTypeInterface,
-  currency: LoanObjectCurrencyInterface,
+  loanType: LoanTypeInterface,
+  currency: LoanCurrencyInterface,
   principal: number,
   termFrequency: number,
-  termPeriodFrequencyType: LoanObjTermPdFrequencyType,
+  termPeriodFrequencyType: LoanTermPdFrequencyType,
   numberOfRepayments: number,
   repaymentEvery: number,
-  repaymentFrequencyType: LoanObjRepaymentFrequencyType,
+  repaymentFrequencyType: LoanRepaymentFrequencyType,
   interestRatePerPeriod: number,
-  interestRateFrequencyType: LoanObjInterestRateFrequencyType,
+  interestRateFrequencyType: LoanInterestRateFrequencyType,
   annualInterestRate: number,
-  amortizationType: LoanObjAmortizationType,
-  interestType: LoanObjInterestType,
-  interestCalculationPeriodType: LoanObjInterestCalculationPeriodType,
+  amortizationType: LoanAmortizationType,
+  interestType: LoanInterestType,
+  interestCalculationPeriodType: LoanInterestCalculationPeriodType,
   transactionProcessingStrategyId: number,
-  timeline: LoanObjTimeline,
-  linkedAccount: LoanObjLinkedAccount,
-  summary:LoanObjSummary,
+  timeline: LoanTimeline,
+  linkedAccount: LoanLinkedAccount,
+  summary:LoanSummary,
   feeChargesAtDisbursementCharged:number,
   inArrears:boolean,
   isNPA:boolean
 }
-export interface LoanRetrieveObjInterface{
+export interface LoanRetrieveInterface{
   id:number,
   accountNo:string,
-  status:LoanObjectStatusInterface,
+  status:LoanStatusInterface,
   clientId:number,
   clientName:string,
   clientOfficeId:number,
@@ -191,82 +191,78 @@ export interface LoanRetrieveObjInterface{
   loanPurposeName:string,
   loanOfficerId:number,
   loanOfficerName:string,
-  loanType:LoanObjectTypeInterface,
-  currency:LoanObjectCurrencyInterface, 
+  loanType:LoanTypeInterface,
+  currency:LoanCurrencyInterface, 
   principal:number,
   termFrequency:number,
-  termPeriodFrequencyType:LoanObjTermPdFrequencyType ,
+  termPeriodFrequencyType:LoanTermPdFrequencyType ,
   numberOfRepayments:number,
   repaymentEvery:number,
-  repaymentFrequencyType:LoanObjRepaymentFrequencyType,
+  repaymentFrequencyType:LoanRepaymentFrequencyType,
   interestRatePerPeriod:number,
-  interestRateFrequencyType:LoanObjInterestRateFrequencyType ,
+  interestRateFrequencyType:LoanInterestRateFrequencyType ,
   annualInterestRate:number,
-  amortizationType:LoanObjAmortizationType,
-  interestType:LoanObjInterestType ,
-  interestCalculationPeriodType:LoanObjInterestCalculationPeriodType,
+  amortizationType:LoanAmortizationType,
+  interestType:LoanInterestType ,
+  interestCalculationPeriodType:LoanInterestCalculationPeriodType,
   transactionProcessingStrategyId:number,
-  timeline:LoanObjTimeline ,
-  summary:LoanObjSummary,    
-  linkedAccount:LoanObjLinkedAccount,
-  disbursementDetails:[LoanObjDisbursementDetails],
+  timeline:LoanTimeline ,
+  summary:LoanSummary,    
+  linkedAccount:LoanLinkedAccount,
+  disbursementDetails:[LoanDisbursementDetails],
   fixedEmiAmount:number,
   maxOutstandingLoanBalance:number,
   canDisburse:boolean,
   emiAmountVariations:Array<number>,                //kindly review this type
   inArrears:boolean,
   isNPA:boolean,
-  overdueCharges:[LoanObjOverDueCharges]        
+  overdueCharges:[LoanOverDueCharges]        
 }
-export interface LoanObjDisbursementDetails{
+export interface LoanDisbursementDetails{
   id:number,
   expectedDisbursementDate:Array<number>,
   principal:number,
   approvedPrincipal:number
 }
-export interface LoanObjOverDueCharges{
+export interface LoanOverDueCharges{
   id:number,
   name:string,
   active:boolean,
   penalty:boolean,
-  currency:LoanObjectCurrencyInterface ,
+  currency:LoanCurrencyInterface ,
   amount:number,
-  chargeTimeType:LoanObjChargeTimeType,
-  chargeAppliesTo:LoanObjChargeAppliesTo,
-  chargeCalculationType:LoanObjChargeCalType,
-  chargePaymentMode:LoanObjChargePaymentMode,
+  chargeTimeType:LoanChargeTimeType,
+  chargeAppliesTo:LoanChargeAppliesTo,
+  chargeCalculationType:LoanChargeCalType,
+  chargePaymentMode:LoanChargePaymentMode,
   feeInterval:number,
-  feeFrequency:LoanObjFeeFrequency
+  feeFrequency:LoanFeeFrequency
 
 }  
-export interface LoanObjChargeTimeType{
-    id:number,
-    code:string,   // "chargeTimeType.overdueInstallment",
-    value:string
-}  
-export interface LoanObjChargeTimeType{
+ 
+export interface LoanChargeTimeType{
   id:number,
   code:string,                      //"chargeTimeType.overdueInstallment",
   value:string
 
 }    
-export interface LoanObjChargeAppliesTo{
+export interface LoanChargeAppliesTo{
   id:number,
   code:string,                              //"chargeAppliesTo.loan,
   value:string
 }
-export interface LoanObjChargeCalType{
+export interface LoanChargeCalType{
   id:number,
   code:string,                              //"chargeCalculationType.percent.of.amount",
   value:string
 
 }
-export interface LoanObjChargePaymentMode{
+export interface LoanChargePaymentMode{
   id:number,
   code:string,     //"chargepaymentmode.regular",
   value:string                //"Regular"
 }
-export interface LoanObjFeeFrequency{
+export interface LoanFeeFrequency{
   id:number,
   code:string,    // "feeFrequencyperiodFrequencyType.weeks",
   value:string //"Weeks"
@@ -278,16 +274,16 @@ export default class Loan {
     this.fineract_obj = fineract_obj;
   }
 
-  async list_loan(config: LoanListConfig): Promise<[LoanObjectInterface]> {
-    let path = "loans";
+  async list_loan(config: LoanListConfig): Promise<[LoanInterface]> {
+    let path = 'loans';
     let response;
     response = await this.fineract_obj.get(path, config);
     return response;
 
 
   }
-  async retrieve_loan(loan_retrive_config: LoanRetrieveConfig): Promise<LoanRetrieveObjInterface> {
-    let retrieve_path = "loans/";
+  async retrieve_loan(loanId: string, loan_retrive_config?: LoanRetrieveConfig): Promise<LoanRetrieveInterface> {
+    let retrieve_path = 'loans/${loanId}';
     let response;
     response = await this.fineract_obj.get(retrieve_path, loan_retrive_config);
     return response;
