@@ -282,10 +282,10 @@ export default class Loan {
 
 
   }
-  async retrieve_loan(loanId: string, loan_retrive_config?: LoanRetrieveConfig): Promise<LoanRetrieveInterface> {
-    let retrieve_path = 'loans/${loanId}';
+  async retrieve_loan(loanId: string, loan_retrieve_config?: LoanRetrieveConfig): Promise<LoanRetrieveInterface> {
+    let retrieve_path =`loans/${loanId}`;
     let response;
-    response = await this.fineract_obj.get(retrieve_path, loan_retrive_config);
+    response = await this.fineract_obj.get(retrieve_path, loan_retrieve_config);
     return response;
   }
 
