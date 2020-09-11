@@ -286,7 +286,7 @@ export interface LoanCreateConfig {
   dateFormat: string,
   locale: string,
   clientId: number,
-  productId: 1,
+  productId: number,
   principal: string,
   loanTermFrequency: number,
   loanTermFrequencyType: number,
@@ -301,17 +301,79 @@ export interface LoanCreateConfig {
   transactionProcessingStrategyId: number,
   expectedDisbursementDate: Array<number>,
   submittedOnDate: Array<number>,
-  linkAccountId: string,
-  fixedEmiAmount: number,
-  maxOutstandingLoanBalance: string,
-  disbursementData: [LoanDisbursementDetails],
-  dataTables: [LoanDataTables]
+  linkAccountId?: string,
+  fixedEmiAmount?: number,
+  maxOutstandingLoanBalance?: string,
+  disbursementData?: [LoanDisbursementDetails],
+  dataTables: [LoanDataTables],
+  graceOnPrincipalPayment?: string,
+  graceOnInterestPayment?: string,
+  graceOnInterestCharged?: string,
+  allowPartialPeriodInterestCalcualtion?: string,
+  graceOnArrearsAgeing?: string,
+  createStandingInstructionAtDisbursement?: string            //(requires linkedAccountId if set to true)
 }
 export interface LoanCreateResponse {
   officeId: number,
   clientId: number,
   loanId: number,
   resourceId: number
+}
+export interface LoanRepaymentSchedule {
+  dateFormat: string,
+  locale: string,
+  productId: number,
+  principal: string,
+  loanTermFrequency: number,
+  loanTermFrequencyType: number,
+  numberOfRepayments: number,
+  repaymentEvery: number,
+  repaymentFrequencyType: number,
+  interestRatePerPeriod: number,
+  amortizationType: number,
+  interestType: number,
+  interestCalculationPeriodType: number,
+  expectedDisbursementDate: Array<number>,
+  transactionProcessingStrategyId: number
+}
+export interface LoanRepaymentScheduleResponse {
+  currency: LoanCurrencyInterface,
+  loanTermInDays: number,
+  totalPrincipalDisbursed: number,
+  totalPrincipalExpected: number,
+  totalPrincipalPaid: number,
+  totalInterestCharged: number,
+  totalFeeChargesCharged: number,
+  totalPenaltyChargesCharged: number,
+  totalWaived: number,
+  totalWrittenOff: number,
+  totalRepaymentExpected: number,
+  totalRepayment: number,
+  totalOutstanding: number,
+  periods: [LoanRepaymentPeriod]
+}
+export interface LoanRepaymentPeriod {
+  period: number,
+  dueDate: Array<number>,
+  principalDisbursed: number,
+  principalLoanBalanceOutstanding: number,
+  feeChargesDue: number,
+  feeChargesOutstanding: number,
+  totalOriginalDueForPeriod: number,
+  totalDueForPeriod: number,
+  totalOutstandingForPeriod: number,
+  totalOverdue: number,
+  totalActualCostOfLoanForPeriod: number,
+  fromDate?: Array<number>,
+  daysInPeriod?: number,
+  principalOriginalDue?: number,
+  principalDue?: number,
+  principalOutstanding?: number,
+  interestOriginalDue?: number,
+  interestDue?: number,
+  interestOutstanding?: number,
+  penaltyChargesDue?: number,
+  totalPaidForPeriod?: number
 }
 export default class Loan {
   fineract_obj: FineractAPI
@@ -322,21 +384,25 @@ export default class Loan {
     let path = 'loans';
     let response;
     response = await this.fineract_obj.get(path, config);
-    return response;
+    return response.data;
   }
   async retrieve_loan(loanId: string, loan_retrieve_config?: LoanRetrieveConfig): Promise<LoanRetrieveInterface> {
     let retrieve_path = `loans/${loanId}`;
     let response;
     response = await this.fineract_obj.get(retrieve_path, loan_retrieve_config);
-    return response;
+    return response.data;
   }
   async loans_create(loan_create_config: LoanCreateConfig): Promise<LoanCreateResponse> {
     let path = 'loans';
     let response;
     response = await this.fineract_obj.post(path, loan_create_config)
-    return response;
+    return response.data;
   }
-
-
+  async calculate_loan_schedule(loan_repay_config:LoanRepaymentSchedule):Promise<LoanRepaymentScheduleResponse>{
+    let path='loans?command=calculateLoanSchedule';
+    let response;
+    response=await this.fineract_obj.post(path,loan_repay_config);
+    return response.data;
+  }
 
 }
