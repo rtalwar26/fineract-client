@@ -1,7 +1,7 @@
 import FineractAPI from './FineractAPI';
 
 export interface LoanListConfig {
-  offset?:number,
+  offset?: number,
   limit?: number,
   orderBy?: string,
   sortBy?: string,
@@ -107,39 +107,39 @@ export interface LoanLinkedAccount {
 }
 export interface LoanSummary {
   currency: LoanCurrencyInterface,
-  principalDisbursed:number,
-  principalPaid:number,
-  principalWrittenOff:number,
-  principalOutstanding:number,
-  principalOverdue:number,
-  interestCharged:number,
-  interestPaid:number,
-  interestWaived:number,
-  interestWrittenOff:number,
-  interestOutstanding:number,
-  interestOverdue:number,
-  feeChargesCharged:number,
-  feeChargesDueAtDisbursementCharged:number,
-  feeChargesPaid:number,
-  feeChargesWaived:number,
-  feeChargesWrittenOff:number,
-  feeChargesOutstanding:number,
-  feeChargesOverdue:number,
-  penaltyChargesCharged:number,
-  penaltyChargesPaid:number,
-  penaltyChargesWaived:number,
-  penaltyChargesWrittenOff:number,
-  penaltyChargesOutstanding:number,
-  penaltyChargesOverdue:number,
-  totalExpectedRepayment:number,
-  totalRepayment:number,
-  totalExpectedCostOfLoan:number,
-  totalCostOfLoan:number,
-  totalWaived:number,
-  totalWrittenOff:number,
-  totalOutstanding:number,
-  totalOverdue:number,
-  overdueSinceDate:Array<number>
+  principalDisbursed: number,
+  principalPaid: number,
+  principalWrittenOff: number,
+  principalOutstanding: number,
+  principalOverdue: number,
+  interestCharged: number,
+  interestPaid: number,
+  interestWaived: number,
+  interestWrittenOff: number,
+  interestOutstanding: number,
+  interestOverdue: number,
+  feeChargesCharged: number,
+  feeChargesDueAtDisbursementCharged: number,
+  feeChargesPaid: number,
+  feeChargesWaived: number,
+  feeChargesWrittenOff: number,
+  feeChargesOutstanding: number,
+  feeChargesOverdue: number,
+  penaltyChargesCharged: number,
+  penaltyChargesPaid: number,
+  penaltyChargesWaived: number,
+  penaltyChargesWrittenOff: number,
+  penaltyChargesOutstanding: number,
+  penaltyChargesOverdue: number,
+  totalExpectedRepayment: number,
+  totalRepayment: number,
+  totalExpectedCostOfLoan: number,
+  totalCostOfLoan: number,
+  totalWaived: number,
+  totalWrittenOff: number,
+  totalOutstanding: number,
+  totalOverdue: number,
+  overdueSinceDate: Array<number>
 
 }
 
@@ -172,122 +172,171 @@ export interface LoanInterface {
   transactionProcessingStrategyId: number,
   timeline: LoanTimeline,
   linkedAccount: LoanLinkedAccount,
-  summary:LoanSummary,
-  feeChargesAtDisbursementCharged:number,
-  inArrears:boolean,
-  isNPA:boolean
+  summary: LoanSummary,
+  feeChargesAtDisbursementCharged: number,
+  inArrears: boolean,
+  isNPA: boolean
 }
-export interface LoanRetrieveInterface{
-  id:number,
-  accountNo:string,
-  status:LoanStatusInterface,
-  clientId:number,
-  clientName:string,
-  clientOfficeId:number,
-  loanProductId:number,
-  loanProductName:string,
-  loanProductDescription:string,
-  loanPurposeId:number,
-  loanPurposeName:string,
-  loanOfficerId:number,
-  loanOfficerName:string,
-  loanType:LoanTypeInterface,
-  currency:LoanCurrencyInterface, 
-  principal:number,
-  termFrequency:number,
-  termPeriodFrequencyType:LoanTermPdFrequencyType ,
-  numberOfRepayments:number,
-  repaymentEvery:number,
-  repaymentFrequencyType:LoanRepaymentFrequencyType,
-  interestRatePerPeriod:number,
-  interestRateFrequencyType:LoanInterestRateFrequencyType ,
-  annualInterestRate:number,
-  amortizationType:LoanAmortizationType,
-  interestType:LoanInterestType ,
-  interestCalculationPeriodType:LoanInterestCalculationPeriodType,
-  transactionProcessingStrategyId:number,
-  timeline:LoanTimeline ,
-  summary:LoanSummary,    
-  linkedAccount:LoanLinkedAccount,
-  disbursementDetails:[LoanDisbursementDetails],
-  fixedEmiAmount:number,
-  maxOutstandingLoanBalance:number,
-  canDisburse:boolean,
-  emiAmountVariations:Array<number>,                //kindly review this type
-  inArrears:boolean,
-  isNPA:boolean,
-  overdueCharges:[LoanOverDueCharges]        
+export interface LoanRetrieveInterface {
+  id: number,
+  accountNo: string,
+  status: LoanStatusInterface,
+  clientId: number,
+  clientName: string,
+  clientOfficeId: number,
+  loanProductId: number,
+  loanProductName: string,
+  loanProductDescription: string,
+  loanPurposeId: number,
+  loanPurposeName: string,
+  loanOfficerId: number,
+  loanOfficerName: string,
+  loanType: LoanTypeInterface,
+  currency: LoanCurrencyInterface,
+  principal: number,
+  termFrequency: number,
+  termPeriodFrequencyType: LoanTermPdFrequencyType,
+  numberOfRepayments: number,
+  repaymentEvery: number,
+  repaymentFrequencyType: LoanRepaymentFrequencyType,
+  interestRatePerPeriod: number,
+  interestRateFrequencyType: LoanInterestRateFrequencyType,
+  annualInterestRate: number,
+  amortizationType: LoanAmortizationType,
+  interestType: LoanInterestType,
+  interestCalculationPeriodType: LoanInterestCalculationPeriodType,
+  transactionProcessingStrategyId: number,
+  timeline: LoanTimeline,
+  summary: LoanSummary,
+  linkedAccount: LoanLinkedAccount,
+  disbursementDetails: [LoanDisbursementDetails],
+  fixedEmiAmount: number,
+  maxOutstandingLoanBalance: number,
+  canDisburse: boolean,
+  emiAmountVariations: Array<number>,                //kindly review this type
+  inArrears: boolean,
+  isNPA: boolean,
+  overdueCharges: [LoanOverDueCharges]
 }
-export interface LoanDisbursementDetails{
-  id:number,
-  expectedDisbursementDate:Array<number>,
-  principal:number,
-  approvedPrincipal:number
+export interface LoanDisbursementDetails {
+  id: number,
+  expectedDisbursementDate: Array<number>,
+  principal: number,
+  approvedPrincipal: number
 }
-export interface LoanOverDueCharges{
-  id:number,
-  name:string,
-  active:boolean,
-  penalty:boolean,
-  currency:LoanCurrencyInterface ,
-  amount:number,
-  chargeTimeType:LoanChargeTimeType,
-  chargeAppliesTo:LoanChargeAppliesTo,
-  chargeCalculationType:LoanChargeCalType,
-  chargePaymentMode:LoanChargePaymentMode,
-  feeInterval:number,
-  feeFrequency:LoanFeeFrequency
-
-}  
- 
-export interface LoanChargeTimeType{
-  id:number,
-  code:string,                      //"chargeTimeType.overdueInstallment",
-  value:string
-
-}    
-export interface LoanChargeAppliesTo{
-  id:number,
-  code:string,                              //"chargeAppliesTo.loan,
-  value:string
-}
-export interface LoanChargeCalType{
-  id:number,
-  code:string,                              //"chargeCalculationType.percent.of.amount",
-  value:string
+export interface LoanOverDueCharges {
+  id: number,
+  name: string,
+  active: boolean,
+  penalty: boolean,
+  currency: LoanCurrencyInterface,
+  amount: number,
+  chargeTimeType: LoanChargeTimeType,
+  chargeAppliesTo: LoanChargeAppliesTo,
+  chargeCalculationType: LoanChargeCalType,
+  chargePaymentMode: LoanChargePaymentMode,
+  feeInterval: number,
+  feeFrequency: LoanFeeFrequency
 
 }
-export interface LoanChargePaymentMode{
-  id:number,
-  code:string,     //"chargepaymentmode.regular",
-  value:string                //"Regular"
+
+export interface LoanChargeTimeType {
+  id: number,
+  code: string,                      //"chargeTimeType.overdueInstallment",
+  value: string
+
 }
-export interface LoanFeeFrequency{
-  id:number,
-  code:string,    // "feeFrequencyperiodFrequencyType.weeks",
-  value:string //"Weeks"
+export interface LoanChargeAppliesTo {
+  id: number,
+  code: string,                              //"chargeAppliesTo.loan,
+  value: string
+}
+export interface LoanChargeCalType {
+  id: number,
+  code: string,                              //"chargeCalculationType.percent.of.amount",
+  value: string
+
+}
+export interface LoanChargePaymentMode {
+  id: number,
+  code: string,     //"chargepaymentmode.regular",
+  value: string                //"Regular"
+}
+export interface LoanFeeFrequency {
+  id: number,
+  code: string,    // "feeFrequencyperiodFrequencyType.weeks",
+  value: string //"Weeks"
+}
+export interface LoanDataTables {
+  registeredTableName: string,
+  data: LoanDataTablesData
+}
+
+export interface LoanDataTablesData {
+  locale: string,
+  account_number: string,
+  balance: string,
+  dateField: Array<number>,
+  dateFormat: string,
+  dateTimeField: Array<number>,
+  activationDate: Array<number>,
+
+}
+export interface LoanCreateConfig {
+  dateFormat: string,
+  locale: string,
+  clientId: number,
+  productId: 1,
+  principal: string,
+  loanTermFrequency: number,
+  loanTermFrequencyType: number,
+  loanType: string,
+  numberOfRepayments: number,
+  repaymentEvery: number,
+  repaymentFrequencyType: number,
+  interestRatePerPeriod: number,
+  amortizationType: number,
+  interestType: number,
+  interestCalculationPeriodType: number,
+  transactionProcessingStrategyId: number,
+  expectedDisbursementDate: Array<number>,
+  submittedOnDate: Array<number>,
+  linkAccountId: string,
+  fixedEmiAmount: number,
+  maxOutstandingLoanBalance: string,
+  disbursementData: [LoanDisbursementDetails],
+  dataTables: [LoanDataTables]
+}
+export interface LoanCreateResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number
 }
 export default class Loan {
-
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
     this.fineract_obj = fineract_obj;
   }
-
-  async list_loan(config: LoanListConfig): Promise<[LoanInterface]> {
+  async list_loan(config?: LoanListConfig): Promise<[LoanInterface]> {
     let path = 'loans';
     let response;
     response = await this.fineract_obj.get(path, config);
     return response;
-
-
   }
   async retrieve_loan(loanId: string, loan_retrieve_config?: LoanRetrieveConfig): Promise<LoanRetrieveInterface> {
-    let retrieve_path =`loans/${loanId}`;
+    let retrieve_path = `loans/${loanId}`;
     let response;
     response = await this.fineract_obj.get(retrieve_path, loan_retrieve_config);
     return response;
   }
+  async loans_create(loan_create_config: LoanCreateConfig): Promise<LoanCreateResponse> {
+    let path = 'loans';
+    let response;
+    response = await this.fineract_obj.post(path, loan_create_config)
+    return response;
+  }
+
 
 
 }
