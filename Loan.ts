@@ -375,6 +375,34 @@ export interface LoanRepaymentPeriod {
   penaltyChargesDue?: number,
   totalPaidForPeriod?: number
 }
+export interface LoanUpdateConfig {
+  locale: string,
+  dateFormat: Array<number>,
+  productId: number,
+  principal: number,
+  loanTermFrequency: number,
+  loanTermFrequencyType: number,
+  numberOfRepayments: number,
+  repaymentEvery: number,
+  repaymentFrequencyType: number,
+  interestRatePerPeriod: number,
+  interestType: number,
+  interestCalculationPeriodType: number,
+  amortizationType: number,
+  expectedDisbursementDate: Array<number>,
+  transactionProcessingStrategyId: number
+}
+export interface LoanUpdateChanges {
+  principal: number,
+  locale: string
+}
+export interface LoanUpdateResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanUpdateChanges
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -398,10 +426,16 @@ export default class Loan {
     response = await this.fineract_obj.post(path, loan_create_config)
     return response.data;
   }
-  async calculate_loan_schedule(loan_repay_config:LoanRepaymentSchedule):Promise<LoanRepaymentScheduleResponse>{
-    let path='loans?command=calculateLoanSchedule';
+  async calculate_loan_schedule(loan_repay_config: LoanRepaymentSchedule): Promise<LoanRepaymentScheduleResponse> {
+    let path = 'loans?command=calculateLoanSchedule';
     let response;
-    response=await this.fineract_obj.post(path,loan_repay_config);
+    response = await this.fineract_obj.post(path, loan_repay_config);
+    return response.data;
+  }
+  async update_loan(loanId: string, loan_update_config: LoanUpdateConfig): Promise<LoanUpdateResponse> {
+    let path = `loans/${loanId}`;
+    let response;
+    response = await this.fineract_obj.put(path, loan_update_config);
     return response.data;
   }
 
