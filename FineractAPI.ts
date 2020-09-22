@@ -42,6 +42,23 @@ export default class FineractAPI {
 
         });
     }
+    async put(path: string, body: any): Promise<any> {
+
+
+
+        return axios({
+            method: "put",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: this.defaultHeaders(),
+            data: body,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
+
+        });
+    }
     async get(path: string, query: any): Promise<any> {
 
         let url = `${this._config.client_base_url}/${path}`;
