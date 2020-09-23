@@ -10,9 +10,8 @@
     "baseUrl": ".",
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "compileOnSave": true,
     "lib": [
-      "es6",
+      "ES2018",
       "DOM"
     ],
     "paths": {},
