@@ -431,6 +431,20 @@ export interface LoanApproveResponse {
   resourceId: number,
   changes: LoanApproveChanges
 }
+export interface LoanUndoApproval {
+  note: string
+}
+export interface LoanUndoApprovalChanges {
+  status: LoanStatusInterface,
+  approvedOnDate: Array<number>,
+}
+export interface LoanUndoApprovalResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanUndoApprovalChanges
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -472,5 +486,10 @@ export default class Loan {
     response = await this.fineract_obj.post(path, loan_approve_config);
     return response.data;
   }
-
+  async undo_approve_loan(loanId: string, loan_undo_approve_config: LoanUndoApproval): Promise<LoanUndoApprovalResponse> {
+    let path = `loans/${loanId}?command=undoApproval`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_undo_approve_config);
+    return response.data;
+  }
 }
