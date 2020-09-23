@@ -403,6 +403,34 @@ export interface LoanUpdateResponse {
   resourceId: number,
   changes: LoanUpdateChanges
 }
+export interface LoanDisbursementData {
+  id: number,
+  principal: string,
+  expectedDisbursementDate: Array<number>
+}
+export interface LoanApproveConfig {
+  locale: string,
+  dateFormat: string,
+  approvedOnDate: Array<number>,
+  approvedLoanAmount?: number,
+  expectedDisbursementDate?: Array<number>,
+  note: string,
+  disbursementData: [LoanDisbursementData]
+}
+export interface LoanApproveChanges {
+  status: LoanStatusInterface,
+  locale: string,
+  dateFormat: string,
+  approvedOnDate: Array<number>,
+  note: string
+}
+export interface LoanApproveResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanApproveChanges
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -436,6 +464,12 @@ export default class Loan {
     let path = `loans/${loanId}`;
     let response;
     response = await this.fineract_obj.put(path, loan_update_config);
+    return response.data;
+  }
+  async approve_loan(loanId: string, loan_approve_config: LoanApproveConfig): Promise<LoanApproveResponse> {
+    let path = `loans/${loanId}?command=approve`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_approve_config);
     return response.data;
   }
 
