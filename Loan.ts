@@ -220,7 +220,7 @@ export interface LoanRetrieveInterface {
 }
 export interface LoanDisbursementDetails {
   id: number,
-  expectedDisbursementDate: Array<number>,
+  expectedDisbursementDate: string,
   principal: number,
   approvedPrincipal: number
 }
@@ -276,10 +276,10 @@ export interface LoanDataTablesData {
   locale: string,
   account_number: string,
   balance: string,
-  dateField: Array<number>,
+  dateField: string,
   dateFormat: string,
-  dateTimeField: Array<number>,
-  activationDate: Array<number>,
+  dateTimeField: string,
+  activationDate: string,
 
 }
 export interface LoanCreateConfig {
@@ -299,8 +299,8 @@ export interface LoanCreateConfig {
   interestType: number,
   interestCalculationPeriodType: number,
   transactionProcessingStrategyId: number,
-  expectedDisbursementDate: Array<number>,
-  submittedOnDate: Array<number>,
+  expectedDisbursementDate: string,
+  submittedOnDate: string,
   linkAccountId?: string,
   fixedEmiAmount?: number,
   maxOutstandingLoanBalance?: string,
@@ -333,7 +333,7 @@ export interface LoanRepaymentSchedule {
   amortizationType: number,
   interestType: number,
   interestCalculationPeriodType: number,
-  expectedDisbursementDate: Array<number>,
+  expectedDisbursementDate: string,
   transactionProcessingStrategyId: number
 }
 export interface LoanRepaymentScheduleResponse {
@@ -377,7 +377,7 @@ export interface LoanRepaymentPeriod {
 }
 export interface LoanUpdateConfig {
   locale: string,
-  dateFormat: Array<number>,
+  dateFormat: string, //"dd MMMM yyyy"
   productId: number,
   principal: number,
   loanTermFrequency: number,
@@ -389,7 +389,7 @@ export interface LoanUpdateConfig {
   interestType: number,
   interestCalculationPeriodType: number,
   amortizationType: number,
-  expectedDisbursementDate: Array<number>,
+  expectedDisbursementDate: string,
   transactionProcessingStrategyId: number
 }
 export interface LoanUpdateChanges {
@@ -406,14 +406,14 @@ export interface LoanUpdateResponse {
 export interface LoanDisbursementData {
   id: number,
   principal: string,
-  expectedDisbursementDate: Array<number>
+  expectedDisbursementDate: string
 }
 export interface LoanApproveConfig {
   locale: string,
   dateFormat: string,
-  approvedOnDate: Array<number>,
+  approvedOnDate: string,
   approvedLoanAmount?: number,
-  expectedDisbursementDate?: Array<number>,
+  expectedDisbursementDate?: string,
   note: string,
   disbursementData: [LoanDisbursementData]
 }
@@ -421,7 +421,7 @@ export interface LoanApproveChanges {
   status: LoanStatusInterface,
   locale: string,
   dateFormat: string,
-  approvedOnDate: Array<number>,
+  approvedOnDate: string,
   note: string
 }
 export interface LoanApproveResponse {
@@ -436,7 +436,7 @@ export interface LoanUndoApproval {
 }
 export interface LoanUndoApprovalChanges {
   status: LoanStatusInterface,
-  approvedOnDate: Array<number>,
+  approvedOnDate: string,
 }
 export interface LoanUndoApprovalResponse {
   officeId: number,
@@ -444,6 +444,44 @@ export interface LoanUndoApprovalResponse {
   loanId: number,
   resourceId: number,
   changes: LoanUndoApprovalChanges
+}
+export interface LoanAssignOfficer {
+  toLoanOfficerId: number,
+  assignmentDate: string,
+  locale: string,
+  dateFormat: string,
+  fromLoanOfficerId: number
+}
+export interface LoanAssignOfficerResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number
+}
+export interface LoanUnassignOfficer {
+  unassignedDate: string,
+  locale: string,
+  dateFormat: string
+}
+export interface LoanRejectApplication {
+  locale: string,
+  dateFormat: string,
+  rejectedOnDate: string,//expected value in dd MMMM yyyy format
+  note: string
+}
+export interface LoanRejectApplicationChanges {
+  status: LoanStatusInterface
+  locale: string,
+  dateFormat: string,
+  rejectedOnDate: string, //expected value in dd MMMM yyyy format
+  closedOnDate: string
+}
+export interface LoanRejectApplicationResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanRejectApplicationChanges
 }
 export default class Loan {
   fineract_obj: FineractAPI
@@ -490,6 +528,24 @@ export default class Loan {
     let path = `loans/${loanId}?command=undoApproval`;
     let response;
     response = await this.fineract_obj.post(path, loan_undo_approve_config);
+    return response.data;
+  }
+  async assign_loan_officer(loanId: string, loan_assign_officer_config: LoanAssignOfficer): Promise<LoanAssignOfficerResponse> {
+    let path = `loans/${loanId}?command=assignLoanOfficer`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_assign_officer_config)
+    return response.data;
+  }
+  async unassign_loan_officer(loanId: string, loan_unassign_officer_config: LoanUnassignOfficer): Promise<LoanAssignOfficerResponse> {
+    let path = `loans/${loanId}?command=unassignLoanOfficer`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_unassign_officer_config);
+    return response.data;
+  }
+  async reject_loan_application(loanId: string, loan_reject_config: LoanRejectApplication): Promise<LoanRejectApplicationResponse> {
+    let path = `loans/${loanId}?command=reject`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_reject_config);
     return response.data;
   }
 }
