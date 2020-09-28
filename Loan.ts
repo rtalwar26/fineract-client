@@ -607,6 +607,47 @@ export interface LoanRepaymentResponse {
   resourceId: number,
   changes: LoanRepaymentChanges
 }
+export interface LoanWaiveInterest {
+  locale: string
+  dateFormat: string,
+  transactionDate: string,
+  transactionAmount: string,
+  note: string
+}
+export interface LoanWaiveInterestResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanWaiveInterest
+}
+export interface LoanWriteoff {
+  locale: string,
+  dateFormat: string,
+  transactionDate: string,
+  note: string
+}
+export interface LoanWriteoffChanges {
+  transactionDate: string,
+  locale: string,
+  dateFormat: string,
+  status: LoanStatusInterface,
+  closedOnDate: string,
+  writtenOffOnDate: string,
+  note: string
+}
+export interface LoanWriteoffResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanWriteoffChanges
+}
+export interface LoanUndoWriteoffResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -703,10 +744,30 @@ export default class Loan {
     response = await this.fineract_obj.post(path, loan_recover_guarantee_obj);
     return response.data;
   }
-  async loans_transaction_repayment(loanId: string, loan_repayment_config: LoanRepayment): Promise<LoanRepaymentResponse> {
+  async loan_transaction_repayment(loanId: string, loan_repayment_config: LoanRepayment): Promise<LoanRepaymentResponse> {
     let path = `loans/${loanId}/transactions?command=repayment`;
     let response;
     response = await this.fineract_obj.post(path, loan_repayment_config);
     return response.data;
   }
+  async loan_waive_interest(loanId: string, loan_waive_interest_config: LoanWaiveInterest): Promise<LoanWaiveInterestResponse> {
+    let path = `loans/${loanId}/transactions?command=waiveInterest`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_waive_interest_config);
+    return response.data;
+  }
+  async loan_writeoff(loanId: string, loan_writeoff_config: LoanWriteoff): Promise<LoanWriteoffResponse> {
+    let path = `loans/${loanId}/transactions?command=writeoff`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_writeoff_config);
+    return response.data;
+  }
+  async undo_loan_writeoff(loanId: string): Promise<LoanUndoWriteoffResponse> {
+    let loan_undo_writeoff_config = {};
+    let path = `loans/${loanId}/transactions?command=undowriteoff`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_undo_writeoff_config);
+    return response.data;
+  }
 }
+
