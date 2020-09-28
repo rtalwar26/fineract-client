@@ -558,6 +558,55 @@ export interface LoanDisburseSavingsAcResponse {
   resourceId: number,
   changes: LoanDisburseToSavingsAcChanges
 }
+export interface LoanUndoDisburse {
+  note: string
+}
+export interface LoanUndoDisburseChanges {
+  status: LoanStatusInterface,
+  actualDisbursementDate: string
+}
+export interface LoanUndoDisburseResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanUndoDisburseChanges
+}
+export interface LoanRecoverGuaranteeResponse {
+  loanId: number;
+}
+export interface LoanRepayment {
+  dateFormat: string,
+  locale: string,
+  transactionDate: string,
+  transactionAmount: string,
+  paymentTypeId: string,
+  note: string,
+  accountNumber: string,
+  checkNumber: string,
+  routingCode: string,
+  receiptNumber: string,
+  bankNumber: string
+}
+export interface LoanRepaymentChanges {
+  transactionDate: string,
+  transactionAmount: string,
+  locale: string,
+  dateFormat: string,                     //format should be"dd MMMM yyyy",
+  note: string,
+  accountNumber: string,
+  checkNumber: string,
+  routingCode: string,
+  receiptNumber: string,
+  bankNumber: string
+}
+export interface LoanRepaymentResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanRepaymentChanges
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -641,5 +690,23 @@ export default class Loan {
     response = await this.fineract_obj.post(path, loan_disburse_savingAc_config);
     return response.data;
   }
-
+  async undo_disburse_loan(loanId: string, loan_undo_disburse_config: LoanUndoDisburse): Promise<LoanUndoDisburseResponse> {
+    let path = `loans/${loanId}?command=undoDisbursal`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_undo_disburse_config);
+    return response.data;
+  }
+  async recover_loan_guarantee(loanId: string): Promise<LoanRecoverGuaranteeResponse> {
+    let loan_recover_guarantee_obj = {};
+    let path = `loans/${loanId}?command=recoverGuarantees`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_recover_guarantee_obj);
+    return response.data;
+  }
+  async loans_transaction_repayment(loanId: string, loan_repayment_config: LoanRepayment): Promise<LoanRepaymentResponse> {
+    let path = `loans/${loanId}/transactions?command=repayment`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_repayment_config);
+    return response.data;
+  }
 }
