@@ -648,6 +648,178 @@ export interface LoanUndoWriteoffResponse {
   clientId: number,
   loanId: number
 }
+export interface LoanPrecloseTemplate {
+  amount: number,
+  principalPortion: number,
+  interestPortion: number,
+  feeChargesPortion: number,
+  penaltyChargesPortion: number
+}
+export interface LoanRecoveryPayment {
+  dateFormat: string        // "dd MMMM yyyy",
+  locale: string,
+  transactionDate: string,
+  transactionAmount: string,
+  paymentTypeId: string,
+  note: string,
+  accountNumber: string,
+  checkNumber: string,
+  routingCode: string,
+  receiptNumber: string,
+  bankNumber: string
+}
+export interface LoanRecoveryPaymentResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanRepaymentChanges
+}
+export interface LoanAdjustTransaction {
+  locale?: string,
+  dateFormat?: string,
+  transactionDate: string,
+  transactionAmount: string,
+  note?: string
+}
+export interface LoanAdjustTransactionResponse {
+  resourceId: number
+}
+export interface LoanActiveRefundCash {
+  dateFormat: string,
+  locale: string,
+  transactionDate: string,
+  transactionAmount: string,
+  paymentTypeId: string
+}
+export interface LoanActiveRefundCashChanges {
+  transactionDate: string,
+  transactionAmount: string,
+  locale: string,
+  dateFormat: string
+}
+export interface LoanActiveRefundCashResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanActiveRefundCashChanges
+}
+export interface LoanActiveForeclosure {
+  dateFormat: string,
+  locale: string,
+  transactionDate: string,
+  note: string
+}
+export interface LoanActiveForeclosureChanges {
+  note: string,
+  eventAmount: number,
+  transactionDate: Array<number>,
+  transactions: Array<number>
+}
+export interface LoanActiveForeclosureResponse {
+  changes: LoanActiveForeclosureChanges,
+  loanId: number
+}
+export interface LoanChargeCreate {
+  chargeId: string,
+  locale?: string,
+  amount: string,
+  dateFormat?: string,
+  dueDate: string
+}
+export interface LoanChargeCreateResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number
+}
+export interface LoanChargePay {
+  dateFormat: string, //dd MMMM yyyy,
+  locale: string,
+  transactionDate: string
+}
+export interface LoanChargePayResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  savingsId: number,
+  resourceId: number
+}
+export interface LoanCreateGuarantor {
+  guarantorTypeId: number,
+  firstname: string,
+  lastname: string,
+  savingsId?: string,
+  amount?: string
+}
+export interface LoanCreateGuarantorResponse {
+  officeId: number,
+  loanId: number,
+  resourceId: number
+}
+export interface LoanCreateCollateral {
+  collateralTypeId: string,
+  value?: string,
+  dateFormat?: string,
+  locale?: string,
+  description?: string
+}
+export interface LoanCreateCollateralResponse {
+  loanId: number,
+  resourceId: number
+}
+export interface LoanCreateRescheduleRequest {
+  loanId: string,
+  rescheduleFromDate: string,
+  rescheduleReasonId: number,
+  submittedOnDate: string,
+  graceOnPrincipal: number,
+  graceOnInterest: number,
+  extraTerms: number,
+  newInterestRate: number,
+  adjustedDueDate: number,
+  recalculateInterest?: boolean,
+  rescheduleReasonComment?: string
+  dateFormat: string,
+  locale: string,
+}
+export interface LoanCreateRescheduleResponse {
+  loanId: number,
+  resourceId: number
+}
+export interface LoanRejectRescheduleRequest {
+  locale: string,
+  dateFormat: string,
+  rejectedOnDate: string
+}
+export interface LoanRejectRescheduleChanges {
+  locale: string,
+  dateFormat: string,
+  rejectedOnDate: string,
+  rejectedByUserId: number
+}
+export interface LoanRejectRescheduleResponse {
+  loanId: number,
+  resourceId: number,
+  changes: LoanRejectRescheduleChanges
+}
+export interface LoanApproveReschedule {
+  locale: string,
+  dateFormat: string,
+  approvedOnDate: string
+}
+export interface LoanApproveRescheduleChanges {
+  locale: string,
+  dateFormat: string,
+  approvedOnDate: string,
+  approvedByUserId: number
+}
+export interface LoanApproveRescheduleResponse {
+  loanId: number,
+  resourceId: number,
+  changes: LoanApproveRescheduleChanges
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -767,6 +939,79 @@ export default class Loan {
     let path = `loans/${loanId}/transactions?command=undowriteoff`;
     let response;
     response = await this.fineract_obj.post(path, loan_undo_writeoff_config);
+    return response.data;
+  }
+  async loan_preclose_template(loanId: string): Promise<LoanPrecloseTemplate> {
+    let loan_preclose_config = {};
+    let path = `loans/${loanId}/transactions?command=prepayLoan`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_preclose_config);
+    return response.data;
+  }
+  async loan_recovery_payment(loanId: string, loan_recovery_config: LoanRecoveryPayment): Promise<LoanRecoveryPaymentResponse> {
+    let path = `loans/${loanId}/transactions?command=recoverypayment`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_recovery_config);
+    return response.data;
+  }
+  async loan_adjust_transaction(loanId: string, transactionId: string, loan_adjust_traxn_config: LoanAdjustTransaction): Promise<LoanAdjustTransactionResponse> {
+    let path = `loans/${loanId}/transactions/${transactionId}`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_adjust_traxn_config);
+    return response.data;
+  }
+  async loan_active_refundByCash(loanId: string, loan_refundByCash_config: LoanActiveRefundCash): Promise<LoanActiveRefundCashResponse> {
+    let path = `loans/${loanId}/transactions?command=refundByCash`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_refundByCash_config);
+    return response.data;
+  }
+  async loan_active_foreclosure(loanId: string, loan_foreclosure_config: LoanActiveForeclosure): Promise<LoanActiveForeclosureResponse> {
+    let path = `loans/${loanId}/transactions?command=foreclosure`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_foreclosure_config);
+    return response.data;
+  }
+  async create_loan_charge(loanId: string, loan_charge_config: LoanChargeCreate): Promise<LoanChargeCreateResponse> {
+    let path = `loans/${loanId}/charges`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_charge_config);
+    return response.data;
+  }
+  async pay_loan_charge(loanId: string, chargeId: string, loan_chargePay_config: LoanChargePay): Promise<LoanChargePayResponse> {
+    let path = `loans/${loanId}/charges/${chargeId}?command=pay`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_chargePay_config);
+    return response.data;
+  }
+  async loan_create_guarantor(loanId: string, loan_createGuarantor_config: LoanCreateGuarantor): Promise<LoanCreateGuarantorResponse> {
+    let path = `loans/${loanId}/guarantors`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_createGuarantor_config);
+    return response.data;
+  }
+  async loan_create_collateral(loanId: string, loan_createCollateral_config: LoanCreateCollateral): Promise<LoanCreateCollateralResponse> {
+    let path = `loans/${loanId}/collaterals`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_createCollateral_config);
+    return response.data;
+  }
+  async create_loan_rescheduleRequest(loan_createRescheduleReq_config: LoanCreateRescheduleRequest): Promise<LoanCreateRescheduleResponse> {
+    let path = `rescheduleloans`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_createRescheduleReq_config);
+    return response.data;
+  }
+  async reject_loan_rescheduleRequest(requestId: string, loan_rejectRescheduleReq_config: LoanRejectRescheduleRequest): Promise<LoanRejectRescheduleResponse> {
+    let path = `rescheduleloans/${requestId}?command=reject`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_rejectRescheduleReq_config);
+    return response.data;
+  }
+  async approve_loan_rescheduleRequest(requestId: string, loan_approveRescheduleReq_config: LoanApproveReschedule): Promise<LoanApproveRescheduleResponse> {
+    let path = `rescheduleloans/${requestId}?command=approve`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_approveRescheduleReq_config);
     return response.data;
   }
 }
