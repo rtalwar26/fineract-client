@@ -820,6 +820,236 @@ export interface LoanApproveRescheduleResponse {
   resourceId: number,
   changes: LoanApproveRescheduleChanges
 }
+export interface LoanModifiedInstallments {
+  dueDate: string,
+  modifiedDueDate: string
+}
+export interface LoanDeletedInstallments {
+  dueDate: string,
+}
+export interface LoanNewInstallments {
+  dueDate: string,
+  installmentAmount: string
+}
+export interface LoanExceptions {
+  modifiedinstallments: [LoanModifiedInstallments],
+  deletedinstallments: [LoanDeletedInstallments],
+  newinstallments: [LoanNewInstallments]
+}
+export interface LoanRepaymentTermVariations {
+  locale: string,
+  dateFormat: string,
+  exceptions: LoanExceptions
+}
+export interface LoanRepaymentTermVariatnResponse {
+  currency: LoanCurrencyInterface,
+  loanTermInDays: number,
+  totalPrincipalDisbursed: number,
+  totalPrincipalExpected: number,
+  totalInterestCharged: number,
+  totalFeeChargesCharged: number,
+  totalPenaltyChargesCharged: number,
+  totalRepaymentExpected: number,
+  periods: [LoanRepaymentPeriod]
+}
+export interface LoanUpdateRepaymentTermType {
+  id: number,
+  code: string,        //"loanTermType.dueDate",
+  value: string
+}
+export interface LoanUpdateRepaymentTermVariations {
+  id: number,
+  termType: LoanUpdateRepaymentTermType,
+  termVariationApplicableFrom: Array<number>,
+  dateValue: Array<number>,
+  isSpecificToInstallment: boolean
+}
+export interface LoanUpdateRepaymentTermVariationChanges {
+  loanTermVariations: [LoanUpdateRepaymentTermVariations]
+}
+export interface LoanUpdateRepaymentTermVariatnResponse {
+  loanId: string,
+  changes: LoanUpdateRepaymentTermVariationChanges
+}
+export interface LoanRemoveTermVariationChanges {
+  removedEntityIds: Array<number>
+}
+export interface LoanRemoveTermVariation {
+  loanId: number,
+  changes: LoanRemoveTermVariationChanges
+}
+export interface LoanRetrieveTxnDetailsType {
+  id: number,
+  code: string                 //"loanTransactionType.repayment",
+  value: string               //"Repayment",
+  disbursement: boolean,
+  repaymentAtDisbursement: boolean,
+  repayment: boolean,
+  contra: boolean,
+  waiveInterest: boolean,
+  waiveCharges: boolean,
+  writeOff: boolean,
+  recoveryRepayment: boolean
+}
+export interface LoanRetrieveTxnDetailsResponse {
+  id: number,
+  type: LoanRetrieveTxnDetailsType,
+  date: Array<number>,                         // [2012, 5, 14],
+  manuallyReversed: boolean,
+  currency: LoanCurrencyInterface,
+  amount: number,
+  interestPortion: number
+}
+export interface LoanChargeTimeType {
+  id: number,
+  code: string,                         //"chargeTimeType.disbursement",
+  value: string                   // "Disbursement"
+}
+export interface LoanChargeCalculationType {
+  id: number,
+  code: string,                         //"chargeCalculationType.flat",
+  value: string                         //"Flat"
+}
+export interface LoanChargeRetrieve {
+  id: number,
+  chargeId: number,
+  name: string,
+  chargeTimeType: LoanChargeTimeType
+  chargeCalculationType: LoanChargeCalculationType,
+  percentage: number,
+  amountPercentageAppliedTo: number,
+  currency: LoanCurrencyInterface,
+  amount: number,
+  amountPaid: number,
+  amountWaived: number,
+  amountWrittenOff: number,
+  amountOutstanding: number,
+  amountOrPercentage: number,
+  penalty: boolean
+}
+export interface LoanGuarantorType {
+  id: number,
+  code: string,    //"guarantor.existing.customer",
+  value: string
+}
+export interface LoanListGuarantorsResponse {
+  id: number,
+  loanId: number,
+  guarantorType: LoanGuarantorType,
+  firstname: string,
+  lastname: string,
+  officeName: string,
+  joinedDate: Array<number>
+}
+export interface LoanCollateralType {
+  id: number,
+  name: string      //"Gold"
+}
+export interface LoanListCollaterals {
+  id: number,
+  type: LoanCollateralType,
+  value: number,
+  description: string,
+  currency: LoanCurrencyInterface
+}
+export interface LoanApplicationDeleteResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number
+}
+export interface LoanGuarantorDeleteResponse {
+  officeId: number,
+  loanId: number,
+  resourceId: number
+}
+export interface LoanCollateralDeleteResponse {
+  loanId: number,
+  resourceId: number
+}
+export interface LoanChargeUpdate {
+  dateFormat: string,
+  locale: string,
+  amount: number,
+  dueDate: string
+}
+export interface LoanChargeUpdateChanges {
+  dueDate: string,
+  dateFormat: string,
+  locale: string,
+  amount: number
+}
+export interface LoanChargeUpdateResponse {
+  officeId: number,
+  clientId: number,
+  loanId: number,
+  resourceId: number,
+  changes: LoanChargeUpdateChanges
+}
+export interface LoanUpdateGuarantor {
+  entityId: number
+}
+export interface LoanUpdateGuarantorResponse {
+  officeId: number,
+  resourceId: number,
+  changes: LoanUpdateGuarantor
+}
+export interface LoanUpdateCollateral {
+  description: string
+}
+export interface LoanUpdateCollateralResponse {
+  loanId: number,
+  resourceId: number,
+  changes: LoanUpdateCollateral
+}
+export interface LoanRescheduleStatusEnum {
+  id: number,
+  code: string,     //"loanStatusType.submitted.and.pending.approval",
+  value: string,       // "Submitted and pending approval",
+  pendingApproval: boolean,
+  approved: boolean,
+  rejected: boolean
+}
+export interface LoanRescheduleReasonCodeValue {
+  id: number,
+  name: string,// "Passport",
+  isActive: boolean
+}
+export interface LoanRescheduleTimeline {
+  submittedOnDate: Array<number>,
+  submittedByUsername: string,
+  submittedByFirstname: string,
+  submittedByLastname: string
+}
+export interface LoanRetrieveRescheduleRequest {
+  id: number,
+  loanId: string,
+  clientId: number,
+  clientName: string,
+  loanAccountNumber: string,
+  statusEnum: LoanRescheduleStatusEnum,
+  rescheduleFromInstallment: number,
+  rescheduleFromDate: Array<number>,
+  recalculateInterest: boolean,
+  rescheduleReasonCodeValue: LoanRescheduleReasonCodeValue,
+  timeline: LoanRescheduleTimeline,
+  rescheduleReasonComment: string,
+  loanTermVariationsData: [LoanUpdateRepaymentTermVariations]
+}
+export interface LoanRepaymentSchedulePreviewRetrieve {
+  currency: LoanCurrencyInterface,
+  loanTermInDays: number,
+  totalPrincipalDisbursed: number,
+  totalPrincipalExpected: number,
+  totalPrincipalPaid: number,
+  totalInterestCharged: number,
+  totalFeeChargesCharged: number,
+  totalPenaltyChargesCharged: number,
+  totalRepaymentExpected: number,
+  totalOutstanding: number,
+  periods: [LoanRepaymentPeriod]
+}
+
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -910,7 +1140,7 @@ export default class Loan {
     return response.data;
   }
   async recover_loan_guarantee(loanId: string): Promise<LoanRecoverGuaranteeResponse> {
-    let loan_recover_guarantee_obj = {};
+    let loan_recover_guarantee_obj = null;
     let path = `loans/${loanId}?command=recoverGuarantees`;
     let response;
     response = await this.fineract_obj.post(path, loan_recover_guarantee_obj);
@@ -935,14 +1165,14 @@ export default class Loan {
     return response.data;
   }
   async undo_loan_writeoff(loanId: string): Promise<LoanUndoWriteoffResponse> {
-    let loan_undo_writeoff_config = {};
+    let loan_undo_writeoff_config = null;
     let path = `loans/${loanId}/transactions?command=undowriteoff`;
     let response;
     response = await this.fineract_obj.post(path, loan_undo_writeoff_config);
     return response.data;
   }
   async loan_preclose_template(loanId: string): Promise<LoanPrecloseTemplate> {
-    let loan_preclose_config = {};
+    let loan_preclose_config = null;
     let path = `loans/${loanId}/transactions?command=prepayLoan`;
     let response;
     response = await this.fineract_obj.post(path, loan_preclose_config);
@@ -1012,6 +1242,127 @@ export default class Loan {
     let path = `rescheduleloans/${requestId}?command=approve`;
     let response;
     response = await this.fineract_obj.post(path, loan_approveRescheduleReq_config);
+    return response.data;
+  }
+  async calculate_loan_repayment_termVariation(loanId: string, loan_repayTermVariatn_config: LoanRepaymentTermVariations): Promise<LoanRepaymentTermVariatnResponse> {
+    let path = `loans/${loanId}/schedule?command=calculateLoanSchedule`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_repayTermVariatn_config);
+    return response.data;
+  }
+  async update_loan_repayment_termVariation(loanId: string, loan_update_repayTermVariatn: LoanRepaymentTermVariations): Promise<LoanUpdateRepaymentTermVariatnResponse> {
+    let path = `loans/${loanId}/schedule?command=addVariations`;
+    let response;
+    response = await this.fineract_obj.post(path, loan_update_repayTermVariatn);
+    return response.data;
+  }
+  async remove_loan_repayment_termVariation(loanId: string): Promise<LoanRemoveTermVariation> {
+    let path = `loans/${loanId}/schedule?command=deleteVariations`;
+    let loan_remove_repayTermVariatn = null;
+    let response;
+    response = await this.fineract_obj.post(path, loan_remove_repayTermVariatn);
+    return response.data;
+  }
+  async retrieve_transaction_details(loanId: string, transactionId: string): Promise<LoanRetrieveTxnDetailsResponse> {
+    let path = `loans/${loanId}/transactions/${transactionId}`;
+    let loan_retrieveTxnDetail_config = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_retrieveTxnDetail_config);
+    return response.data;
+  }
+  async retrieve_loan_charge(loanId: string, chargeId: string): Promise<LoanChargeRetrieve> {
+    let path = `loans/${loanId}/charges/${chargeId}`;
+    let loan_retrieveCharge_config = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_retrieveCharge_config);
+    return response.data;
+  }
+  async loan_list_guarantors(loanId: string): Promise<[LoanListGuarantorsResponse]> {
+    let path = `loans/${loanId}/guarantors`;
+    let loan_list_guarantors_config = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_list_guarantors_config);
+    return response.data;
+  }
+  async loan_retrieve_guarantor(loanId: string, guarantorId: string): Promise<LoanListGuarantorsResponse> {
+    let path = `loans/${loanId}/guarantors/${guarantorId}`;
+    let loan_retrieve_guarantor_config = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_retrieve_guarantor_config);
+    return response.data;
+  }
+  async loan_list_collaterals(loanId: string): Promise<[LoanListCollaterals]> {
+    let path = `loans/${loanId}/collaterals`;
+    let loan_list_collaterals_config = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_list_collaterals_config);
+    return response.data;
+  }
+  async loan_retrieve_collateral(loanId: string, guarantorId: string): Promise<LoanListCollaterals> {
+    let path = `loans/${loanId}/collaterals/${guarantorId}`;
+    let loan_retrieve_collateral_config = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_retrieve_collateral_config);
+    return response.data;
+  }
+  async retrieve_loan_rescheduleRequest(requestId: string): Promise<LoanRetrieveRescheduleRequest> {
+    let path = `rescheduleloans/${requestId}`;
+    let loan_retrieve_rescheduleRequest = null;
+    let response;
+    response = await this.fineract_obj.get(path, loan_retrieve_rescheduleRequest);
+    return response.data;
+  }
+  async retrieve_preview_newLoanRepaymentSchedule(requestId: string): Promise<LoanRepaymentSchedulePreviewRetrieve> {
+    let path = `rescheduleloans/${requestId}?command=previewLoanReschedule`;
+    let retrieve_previewLoanReschedule = null;
+    let response;
+    response = await this.fineract_obj.get(path, retrieve_previewLoanReschedule);
+    return response.data;
+  }
+  async delete_loan_application(loanId: string): Promise<LoanApplicationDeleteResponse> {
+    let path = `loans/${loanId}`;
+    let loan_delete_config = null;
+    let response;
+    response = await this.fineract_obj.delete(path, loan_delete_config);
+    return response.data;
+  }
+  async delete_loan_charge(loanId: string, chargeId: string): Promise<LoanApplicationDeleteResponse> {
+    let path = `loans/${loanId}/charges/${chargeId}`;
+    let loanCharge_delete_config = null;
+    let response;
+    response = await this.fineract_obj.delete(path, loanCharge_delete_config);
+    return response.data;
+  }
+  async delete_loan_guarantor(loanId: string, guarantorId: string): Promise<LoanGuarantorDeleteResponse> {
+    let path = `loans/${loanId}/guarantors/${guarantorId}`;
+    let loanGuarantor_delete_config = null;
+    let response;
+    response = await this.fineract_obj.delete(path, loanGuarantor_delete_config);
+    return response.data;
+  }
+  async delete_loan_collateral(loanId: string, collateralId: string): Promise<LoanCollateralDeleteResponse> {
+    let path = `loans/${loanId}/collaterals/${collateralId}`;
+    let loanCollateral_delete_config = null;
+    let response;
+    response = await this.fineract_obj.delete(path, loanCollateral_delete_config);
+    return response.data;
+  }
+  async update_loan_charge(loanId: string, chargeId: string, loanCharge_update_config: LoanChargeUpdate): Promise<LoanChargeUpdateResponse> {
+    let path = `loans/${loanId}/charges/${chargeId}`;
+    let response;
+    response = await this.fineract_obj.put(path, loanCharge_update_config);
+    return response.data;
+  }
+  async update_loan_guarantor(loanId: string, guarantorId: string, loanGuarantor_update_config: LoanUpdateGuarantor): Promise<LoanUpdateGuarantorResponse> {
+    let path = `loans/${loanId}/guarantors/${guarantorId}`;
+    let response;
+    response = await this.fineract_obj.put(path, loanGuarantor_update_config);
+    return response.data;
+  }
+  async update_loan_collateral(loanId: string, collateralId: string, loanCollateral_update_config: LoanUpdateCollateral): Promise<LoanUpdateCollateralResponse> {
+    let path = `loans/${loanId}/collaterals/${collateralId}`;
+    let response;
+    response = await this.fineract_obj.put(path, loanCollateral_update_config);
     return response.data;
   }
 }
