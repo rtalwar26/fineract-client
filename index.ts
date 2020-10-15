@@ -1,2 +1,5 @@
 import FineractAPI from "./FineractAPI";
-export { FineractAPI };
+import Loan from "./Loan";
+import Clients from "./Clients";
+export { FineractAPI, Loan, Clients };
+
