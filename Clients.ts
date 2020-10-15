@@ -32,21 +32,39 @@ export interface ClientCreateResponse {
     savingsId: number,
     groupId?: number
 }
+export interface ClientStatus {
+    id: number,
+    code: string,
+    value: string
+}
+export interface ClientListInfo {
+    id: number,
+    accountNo: string,
+    status: ClientStatus,
+    active: boolean,
+    activationDate: Array<number>,
+    fullname: string,
+    displayName: string,
+    officeId: number,
+    officeName: string
+
+}
+export interface ClientListResponse {
+    totalFilteredRecords: number,
+    pageItems: Array<ClientListInfo>,
+
+}
 export default class Clients {
     fineract_obj: FineractAPI
     constructor(fineract_obj: FineractAPI) {
         this.fineract_obj = fineract_obj;
     }
-    // async list_clients(config?: LoanListConfig): Promise<[LoanInterface]> {
-    //     let path = 'loans';
-    //     let response;
-    //     response = await this.fineract_obj.get(path, config);
-    //     return response.data;
-    // }
-    // async list_clients(args: any, req: any) {
-    //     let response = await (new FineractAPI(this.config)).get('clients', {});
-    //     return response.data && response.data.pageItems;
-    // }
+    async list_clients(config?: ClientInfo): Promise<[ClientListResponse]> {
+        let path = 'clients';
+        let response;
+        response = await this.fineract_obj.get(path, config);
+        return response.data;
+    }
     async create_clients(client_create_config: ClientInfo): Promise<ClientCreateResponse> {
         console.log("inside create_clients in fineract client");
         let path = 'clients';
