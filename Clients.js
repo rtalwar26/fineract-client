@@ -13,7 +13,7 @@ class Clients {
     async create_clients(client_create_config) {
         console.log("inside create_clients in fineract client");
         let path = 'clients';
-        let response = await (this.fineract_obj).post(path, client_create_config);
+        let response = await this.fineract_obj.post(path, client_create_config);
         console.log("request passed inside finearct", client_create_config);
         return response.data;
     }

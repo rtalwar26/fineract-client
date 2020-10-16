@@ -27,7 +27,7 @@ export default class FineractAPI {
     }
     async post(path: string, body: any): Promise<any> {
 
-
+        console.log("inside fineract post");
 
         return axios({
             method: "post",
