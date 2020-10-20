@@ -12,7 +12,6 @@ class FineractAPI {
         };
     }
     async post(path, body) {
-        console.log("inside fineract post");
         return axios({
             method: "post",
             url: `${this._config.client_base_url}/${path}`,
