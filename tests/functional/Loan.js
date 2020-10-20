@@ -5,11 +5,11 @@ const bdd_1 = require("intern/lib/interfaces/bdd");
 const Loan_1 = require("../../Loan");
 const { describe, it } = intern.getInterface('bdd');
 const { assert } = intern.getPlugin('chai');
-const test_loan_config = { offset: 1, limit: 2, orderBy: "LoanId", sortBy: "Descending", officeId: 112, underHierarchy: "random",
-    accountNo: "10090100678976", externalId: "Ex0987", sqlSearch: "test_sql" };
+// const test_loan_config={ offset:1,limit:2,orderBy:"LoanId",sortBy:"Descending",officeId: 112,underHierarchy:"random",
+//     accountNo:"10090100678976",externalId:"Ex0987",sqlSearch:"test_sql"};
 //const test_response_data={ "totalFliteredRecords":1,"pageItems":[{"id": 1,"accountNo": "000000001",}]};
 const test_loan_id = "1";
-const test_loan_retrieve_config = { associations: ["all"] };
+// const test_loan_retrieve_config={associations:["all"]}
 let config;
 describe('Loan Tests', () => {
     bdd_1.before(() => {

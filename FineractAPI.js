@@ -24,6 +24,19 @@ class FineractAPI {
             }
         });
     }
+    async put(path, body) {
+        return axios({
+            method: "put",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: this.defaultHeaders(),
+            data: body,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
+        });
+    }
     async get(path, query) {
         let url = `${this._config.client_base_url}/${path}`;
         let headers = this.defaultHeaders();
@@ -32,6 +45,19 @@ class FineractAPI {
             url: `${url}`,
             params: query,
             headers: headers,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
+        });
+    }
+    async delete(path, body) {
+        return axios({
+            method: "delete",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: this.defaultHeaders(),
+            data: body,
             responseType: 'json',
             auth: {
                 username: this._config.client_username,

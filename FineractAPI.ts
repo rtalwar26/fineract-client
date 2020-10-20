@@ -28,7 +28,6 @@ export default class FineractAPI {
     async post(path: string, body: any): Promise<any> {
 
 
-
         return axios({
             method: "post",
             url: `${this._config.client_base_url}/${path}`,
