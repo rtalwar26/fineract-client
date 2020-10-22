@@ -279,15 +279,14 @@ export interface LoanDataTablesData {
   dateField: string,
   dateFormat: string,
   dateTimeField: string,
-  activationDate: string,
-
+  activationDate: string
 }
 export interface LoanCreateConfig {
   dateFormat: string,
   locale: string,
-  clientId: number,
+  clientId: string,
   productId: number,
-  principal: string,
+  principal: number,
   loanTermFrequency: number,
   loanTermFrequencyType: number,
   loanType: string,
@@ -301,21 +300,30 @@ export interface LoanCreateConfig {
   transactionProcessingStrategyId: number,
   expectedDisbursementDate: string,
   submittedOnDate: string,
-  linkAccountId?: string,
+  linkAccountId?: number,
   fixedEmiAmount?: number,
   maxOutstandingLoanBalance?: string,
-  disbursementData?: [LoanDisbursementDetails],
-  dataTables: [LoanDataTables],
+  disbursementData: [LoanDisbursementDetails],
+  dataTables?: [LoanDataTables],
   graceOnPrincipalPayment?: string,
   graceOnInterestPayment?: string,
   graceOnInterestCharged?: string,
-  allowPartialPeriodInterestCalcualtion?: string,
-  graceOnArrearsAgeing?: string,
-  createStandingInstructionAtDisbursement?: string            //(requires linkedAccountId if set to true)
+  allowPartialPeriodInterestCalculation?: boolean,
+  graceOnArrearsAgeing: string,
+  createStandingInstructionAtDisbursement?: boolean,          //(requires linkedAccountId if set to true)
+  inArrearsTolerance: number,
+  isEqualAmortization: boolean,
+  fundId?: number,
+  externalId?: string,
+  loanOfficerId?: number,
+  repaymentFrequencyDayOfWeekType: number,
+  repaymentFrequencyNthDayType?: number,
+  repaymentsStartingFromDate?: string,
+  allowPartialPeriodInterestCalcualtion: boolean
 }
 export interface LoanCreateResponse {
   officeId: number,
-  clientId: number,
+  clientId: string,
   loanId: number,
   resourceId: number
 }

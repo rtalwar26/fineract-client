@@ -1,3 +1,4 @@
+"use strict";
 const fs = require('fs');
 console.log('Checking .env .....');
 let a = fs.existsSync('.env');
