@@ -430,7 +430,8 @@ export interface LoanApproveChanges {
   locale: string,
   dateFormat: string,
   approvedOnDate: string,
-  note: string
+  note: string,
+  expectedDisbursementDate?: string
 }
 export interface LoanApproveResponse {
   officeId: number,
