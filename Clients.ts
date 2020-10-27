@@ -76,7 +76,7 @@ export default class Clients {
     constructor(fineract_obj: FineractAPI) {
         this.fineract_obj = fineract_obj;
     }
-    async list_clients(): Promise<[ClientListResponse]> {
+    async list_clients(): Promise<ClientListResponse> {
         let client_config = {}
         let path = 'clients';
         let response;
@@ -90,7 +90,7 @@ export default class Clients {
         return response.data;
     }
 
-    async search_client_by_mobile_no(mobile_no: string): Promise<ClientLoginResponse> {
+    async search_client_by_mobile_no(mobile_no: string): Promise<[any]> {
 
         let search_query_obj = {
             exactMatch: "false",
