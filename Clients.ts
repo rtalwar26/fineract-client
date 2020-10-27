@@ -67,6 +67,10 @@ export interface ClientListResponse {
     pageItems: [ClientListInfo],
 
 }
+export interface ClientLoginResponse {
+    success: boolean,
+    entityId: number  // <--- this is the client id in the fineract system
+}
 export default class Clients {
     fineract_obj: FineractAPI
     constructor(fineract_obj: FineractAPI) {
@@ -82,7 +86,19 @@ export default class Clients {
     async create_clients(client_create_config: ClientInfo): Promise<ClientCreateResponse> {
 
         let path = 'clients';
-        let response = await this.fineract_obj.post(path, client_create_config,);
+        let response = await this.fineract_obj.post(path, client_create_config);
+        return response.data;
+    }
+
+    async search_client_by_mobile_no(mobile_no: string): Promise<ClientLoginResponse> {
+
+        let search_query_obj = {
+            exactMatch: "false",
+            query: mobile_no,
+            resource: "clients,clientIdentifiers",
+        }
+        let path = 'search';
+        let response = await this.fineract_obj.get(path, search_query_obj);
         return response.data;
     }
 
