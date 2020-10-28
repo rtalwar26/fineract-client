@@ -62,6 +62,23 @@ export interface ClientListInfo {
     officeName: string
 
 }
+export interface DataTableCreate {
+    datatableName: string,
+    apptableName: string,
+    columns: [DataTableColumns],
+    multiRow?: boolean
+}
+export interface DataTableColumns {
+    name: string,
+    type: string,
+    code?: string,
+    length?: number,
+    mandatory?: boolean
+
+}
+export interface DataTableCreateResponse {
+    resourceIdentifier: string
+}
 export interface ClientListResponse {
     totalFilteredRecords: number,
     pageItems: [ClientListInfo],
@@ -100,6 +117,14 @@ export default class Clients {
         let path = 'search';
         let response = await this.fineract_obj.get(path, search_query_obj);
         return response.data;
+    }
+
+    async create_datatable(datatable_create_config: DataTableCreate): Promise<DataTableCreateResponse> {
+
+        let path = 'datatables';
+        let response = await this.fineract_obj.post(path, datatable_create_config);
+        return response.data;
+
     }
 
 }
