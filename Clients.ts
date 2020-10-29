@@ -127,4 +127,9 @@ export default class Clients {
 
     }
 
+    async clients_retrieve(clientId: number): Promise<any> {
+        let path = `clients/${clientId}`;
+        let response = await this.fineract_obj.get(path, clientId);
+        return response.data;
+    }
 }
