@@ -303,20 +303,20 @@ export interface LoanCreateConfig {
   linkAccountId?: number,
   fixedEmiAmount?: number,
   maxOutstandingLoanBalance?: string,
-  disbursementData: [LoanDisbursementDetails],
+  disbursementData?: Array<LoanDisbursementData>,
   dataTables?: [LoanDataTables],
   graceOnPrincipalPayment?: string,
   graceOnInterestPayment?: string,
   graceOnInterestCharged?: string,
   allowPartialPeriodInterestCalculation?: boolean,
-  graceOnArrearsAgeing: string,
+  graceOnArrearsAgeing?: string,
   createStandingInstructionAtDisbursement?: boolean,          //(requires linkedAccountId if set to true)
-  inArrearsTolerance: number,
+  inArrearsTolerance?: number,
   isEqualAmortization: boolean,
   fundId?: number,
   externalId?: string,
   loanOfficerId?: number,
-  repaymentFrequencyDayOfWeekType: number,
+  repaymentFrequencyDayOfWeekType?: number,
   repaymentFrequencyNthDayType?: number,
   repaymentsStartingFromDate?: string,
   allowPartialPeriodInterestCalcualtion: boolean
@@ -423,7 +423,7 @@ export interface LoanApproveConfig {
   approvedLoanAmount?: number,
   expectedDisbursementDate?: string,
   note: string,
-  disbursementData: [LoanDisbursementData]
+  disbursementData?: Array<LoanDisbursementData>
 }
 export interface LoanApproveChanges {
   status: LoanStatusInterface,
@@ -520,11 +520,11 @@ export interface LoanDisburse {
   actualDisbursementDate: string,
   paymentTypeId: string,
   note: string,
-  accountNumber: string,
+  accountNumber?: string,
   checkNumber: string,
-  routingCode: string,
-  receiptNumber: string,
-  bankNumber: string
+  routingCode?: string,
+  receiptNumber?: string,
+  bankNumber?: string
 }
 export interface LoanDisburseChanges {
   accountNumber: string,
