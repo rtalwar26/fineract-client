@@ -31,5 +31,10 @@ class Clients {
         let response = await this.fineract_obj.post(path, datatable_create_config);
         return response.data;
     }
+    async clients_retrieve(clientId) {
+        let path = `clients/${clientId}`;
+        let response = await this.fineract_obj.get(path, clientId);
+        return response.data;
+    }
 }
 exports.default = Clients;
