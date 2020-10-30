@@ -328,10 +328,13 @@ export interface LoanCreateResponse {
   resourceId: number
 }
 export interface LoanRepaymentSchedule {
+  allowPartialPeriodInterestCalcualtion: boolean,
+  loanType: string,
+  clientId?: string,
   dateFormat: string,
   locale: string,
   productId: number,
-  principal: string,
+  principal: number,
   loanTermFrequency: number,
   loanTermFrequencyType: number,
   numberOfRepayments: number,
@@ -342,7 +345,8 @@ export interface LoanRepaymentSchedule {
   interestType: number,
   interestCalculationPeriodType: number,
   expectedDisbursementDate: string,
-  transactionProcessingStrategyId: number
+  transactionProcessingStrategyId: number,
+  submittedOnDate: string
 }
 export interface LoanRepaymentScheduleResponse {
   currency: LoanCurrencyInterface,
