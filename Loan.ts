@@ -592,8 +592,8 @@ export interface LoanRepayment {
   dateFormat: string,
   locale: string,
   transactionDate: string,
-  transactionAmount: string,
-  paymentTypeId: string,
+  transactionAmount: number,
+  paymentTypeId: number,
   note: string,
   accountNumber: string,
   checkNumber: string,
@@ -1159,7 +1159,7 @@ export default class Loan {
     response = await this.fineract_obj.post(path, loan_recover_guarantee_obj);
     return response.data;
   }
-  async loan_transaction_repayment(loanId: string, loan_repayment_config: LoanRepayment): Promise<LoanRepaymentResponse> {
+  async loan_transaction_repayment(loanId: number, loan_repayment_config: LoanRepayment): Promise<LoanRepaymentResponse> {
     let path = `loans/${loanId}/transactions?command=repayment`;
     let response;
     response = await this.fineract_obj.post(path, loan_repayment_config);
