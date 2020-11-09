@@ -1378,12 +1378,7 @@ export default class Loan {
     response = await this.fineract_obj.put(path, loanCollateral_update_config);
     return response.data;
   }
-  async fetch_loan_details_byloanId(loanId: number): Promise<[any]> {
-
-    let search_query_obj = {
-      associations: "all",
-      exclude: "guarantors,futureSchedule",
-    }
+  async fetch_loan_details_byloanId(loanId: number, search_query_obj: any): Promise<[any]> {
     let path = `loans/${loanId}`;
     let response = await this.fineract_obj.get(path, search_query_obj);
     return response.data;
