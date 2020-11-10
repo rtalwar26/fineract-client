@@ -155,4 +155,15 @@ export default class Clients {
 
     }
 
+    async get_datatable_details(datatable_name: string, clientId: number): Promise<any> {
+        let search_query_obj = {
+            genericResultSet: "true",
+        }
+        let path = `datatables/${datatable_name}/${clientId}`;
+        let response = await this.fineract_obj.get(path, search_query_obj);
+        return response.data;
+
+    }
+
+
 }
