@@ -88,6 +88,14 @@ export interface ClientLoginResponse {
     success: boolean,
     entityId: number  // <--- this is the client id in the fineract system
 }
+export interface ClientCreateEntryDataTable {
+    email: string,
+    pre_approved_credit: number,
+    clientId: number,
+    locale: string,
+    dateFormat: string
+
+}
 export default class Clients {
     fineract_obj: FineractAPI
     constructor(fineract_obj: FineractAPI) {
@@ -137,6 +145,14 @@ export default class Clients {
         let path = `clients/${clientId}/accounts`;
         let response = await this.fineract_obj.get(path, clientId);
         return response.data;
+    }
+
+    async create_datatable_entry(datatable_name: string, create_entrydatatable_config: ClientCreateEntryDataTable): Promise<any> {
+        let clientId = create_entrydatatable_config.clientId;
+        let path = `datatables/${datatable_name}/${clientId}`;
+        let response = await this.fineract_obj.post(path, create_entrydatatable_config);
+        return response.data;
+
     }
 
 }
