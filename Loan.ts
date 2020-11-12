@@ -595,11 +595,11 @@ export interface LoanRepayment {
   transactionAmount: number,
   paymentTypeId: number,
   note: string,
-  accountNumber: string,
-  checkNumber: string,
-  routingCode: string,
-  receiptNumber: string,
-  bankNumber: string
+  accountNumber?: string,
+  checkNumber?: string,
+  routingCode?: string,
+  receiptNumber?: string,
+  bankNumber?: string
 }
 export interface LoanRepaymentChanges {
   transactionDate: string,
