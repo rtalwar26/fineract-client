@@ -16,7 +16,7 @@ export interface ClientInfoFamily {
 
 }
 export interface ClientInfo {
-    officeId: number,
+    officeId?: number,
     firstname: string,
     lastname: string,
     externalId?: string,
@@ -33,16 +33,18 @@ export interface ClientInfo {
     clientTypeId?: number,
     dateOfBirth?: string,
     genderId?: number,
-    legalFormId: number
-    mobileNo?: string,
+    legalFormId?: number
+    mobileNo: string,
     accountNo?: string,
     staffId?: number,
     groupId?: number
 }
 export interface ClientCreateResponse {
-    rollbackTransaction: boolean,
-    commandId: number,
-    resourceId: number
+    rollbackTransaction?: boolean,
+    commandId?: number,
+    resourceId: number,
+    officeId: number,
+    clientId: number
 
 }
 export interface ClientStatus {
