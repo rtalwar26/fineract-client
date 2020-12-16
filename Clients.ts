@@ -91,12 +91,18 @@ export interface ClientLoginResponse {
     entityId: number  // <--- this is the client id in the fineract system
 }
 export interface ClientCreateEntryDataTable {
-    email: string,
-    pre_approved_credit: number,
-    clientId: number,
+    email?: string,
+    pre_approved_credit?: number,
+    clientId?: number,
     locale: string,
-    dateFormat: string
-
+    dateFormat: string,
+    accountNo?: string,
+    bankName?: string,
+    bankIFSCCode?: string,
+    bankAccountName?: string,
+    PANnumber?: string,
+    employerName?: string,
+    monthlySalary?: number
 }
 export default class Clients {
     fineract_obj: FineractAPI
