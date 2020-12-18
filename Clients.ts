@@ -155,8 +155,8 @@ export default class Clients {
         return response.data;
     }
 
-    async create_datatable_entry(datatable_name: string, create_entrydatatable_config: ClientCreateEntryDataTable): Promise<any> {
-        let clientId = create_entrydatatable_config.clientId;
+    async create_datatable_entry(datatable_name: string, create_entrydatatable_config: ClientCreateEntryDataTable, clientId: string): Promise<any> {
+
         let path = `datatables/${datatable_name}/${clientId}`;
         let response = await this.fineract_obj.post(path, create_entrydatatable_config);
         return response.data;
