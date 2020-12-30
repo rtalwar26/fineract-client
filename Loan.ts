@@ -1062,7 +1062,14 @@ export interface LoanRepaymentSchedulePreviewRetrieve {
   totalOutstanding: number,
   periods: [LoanRepaymentPeriod]
 }
-
+export interface LoanDetailsDatatableEntry {
+  dateFormat: string,
+  disbursement_status: string,
+  locale: string
+}
+export interface LoanDetailsDatatableEntryResponse {
+  resourceId: number
+}
 export default class Loan {
   fineract_obj: FineractAPI
   constructor(fineract_obj: FineractAPI) {
@@ -1382,6 +1389,13 @@ export default class Loan {
     let path = `loans/${loanId}`;
     let response = await this.fineract_obj.get(path, search_query_obj);
     return response.data;
+  }
+  async create_datatable_entry(datatable_name: string, create_entry_loandatatable_config: LoanDetailsDatatableEntry, loanId: number): Promise<LoanDetailsDatatableEntryResponse> {
+
+    let path = `datatables/${datatable_name}/${loanId}`;
+    let response = await this.fineract_obj.post(path, create_entry_loandatatable_config);
+    return response.data;
+
   }
 }
 

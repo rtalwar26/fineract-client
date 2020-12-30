@@ -319,5 +319,10 @@ class Loan {
         let response = await this.fineract_obj.get(path, search_query_obj);
         return response.data;
     }
+    async create_datatable_entry(datatable_name, create_entry_loandatatable_config, loanId) {
+        let path = `datatables/${datatable_name}/${loanId}`;
+        let response = await this.fineract_obj.post(path, create_entry_loandatatable_config);
+        return response.data;
+    }
 }
 exports.default = Loan;
