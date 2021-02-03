@@ -101,8 +101,16 @@ export interface ClientCreateEntryDataTable {
     bankIFSCCode?: string,
     bankAccountName?: string,
     PANnumber?: string,
+    Aadhaar?: string,
+    paysack_company_id?: string,
     employerName?: string,
-    monthlySalary?: number
+    monthlySalary?: number,
+    address1?: string,
+    address2?: string,
+    city?: string,
+    state?: string,
+    country?: string,
+    pincode?: string
 }
 export default class Clients {
     fineract_obj: FineractAPI
@@ -170,6 +178,16 @@ export default class Clients {
         return response.data;
 
     }
+
+    async update_datatable_details(datatable_name: string, clientId: number, search_query_obj: any): Promise<any> {
+
+        let path = `datatables/${datatable_name}/${clientId}`;
+        let response = await this.fineract_obj.put(path, search_query_obj);
+        return response.data;
+
+    }
+
+
 
 
 }
