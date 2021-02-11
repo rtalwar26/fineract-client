@@ -10,8 +10,8 @@ export interface ClientInfoFamily {
     firstName: string,
     genderId: number, // codevalue is given for genderId female=15,male=14 
     isDependent: boolean,
-    locale: string
-    mobileNumber: string
+    locale: string,
+    mobileNumber: string,
     relationshipId: number //code value is given for  relationshipId
 
 }
@@ -22,8 +22,8 @@ export interface ClientInfo {
     externalId?: string,
     dateFormat?: string,
     locale?: string,
-    active: boolean,
-    activationDate: string,
+    active?: boolean,
+    activationDate?: string,
     address?: object,
     submittedOnDate?: string,
     savingsProductId?: number,
@@ -33,7 +33,7 @@ export interface ClientInfo {
     clientTypeId?: number,
     dateOfBirth?: string,
     genderId?: number,
-    legalFormId?: number
+    legalFormId?: number,
     mobileNo: string,
     accountNo?: string,
     staffId?: number,
@@ -179,15 +179,19 @@ export default class Clients {
 
     }
 
-    async update_datatable_details(datatable_name: string, clientId: number, search_query_obj: any): Promise<any> {
+    async update_datatable_details(datatable_name: string, clientId: number, update_datatable_config: ClientCreateEntryDataTable): Promise<any> {
 
-        let path = `datatables/${datatable_name}/${clientId}`;
-        let response = await this.fineract_obj.put(path, search_query_obj);
+        let path = `datatables/${datatable_name}/${clientId}?` + 'genericResultSet=true';
+        let response = await this.fineract_obj.put(path, update_datatable_config);
         return response.data;
 
     }
+    async update_client(clientId: number, update_client_config: ClientInfo): Promise<ClientCreateResponse> {
 
+        let path = `clients/${clientId}`;
+        let response = await this.fineract_obj.put(path, update_client_config);
+        return response.data;
 
-
+    }
 
 }

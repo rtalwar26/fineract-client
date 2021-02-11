@@ -51,5 +51,15 @@ class Clients {
         let response = await this.fineract_obj.get(path, search_query_obj);
         return response.data;
     }
+    async update_datatable_details(datatable_name, clientId, update_datatable_config) {
+        let path = `datatables/${datatable_name}/${clientId}?` + 'genericResultSet=true';
+        let response = await this.fineract_obj.put(path, update_datatable_config);
+        return response.data;
+    }
+    async update_client(clientId, update_client_config) {
+        let path = `clients/${clientId}`;
+        let response = await this.fineract_obj.put(path, update_client_config);
+        return response.data;
+    }
 }
 exports.default = Clients;
