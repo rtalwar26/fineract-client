@@ -42,9 +42,9 @@ export interface ClientInfo {
 export interface ClientCreateResponse {
     rollbackTransaction?: boolean,
     commandId?: number,
-    resourceId: number,
-    officeId: number,
-    clientId: number
+    resourceId?: number,
+    officeId?: number,
+    clientId?: number
 
 }
 export interface ClientStatus {
