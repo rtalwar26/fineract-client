@@ -1,4 +1,6 @@
 const axios = require('axios');
+import * as FormData from "form-data";
+
 
 
 export interface FineractAPIConfig {
@@ -33,6 +35,26 @@ export default class FineractAPI {
             url: `${this._config.client_base_url}/${path}`,
             headers: this.defaultHeaders(),
             data: body,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
+
+        });
+    }
+    async post_formdata(path: string, body: Buffer, name: string, description: string): Promise<any> {
+        var data = new FormData();
+        data.append('name', name);
+        data.append('description', description);
+        data.append('file', body);
+
+
+        return axios({
+            method: "post",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: { ...this.defaultHeaders(), 'Content-Type': 'multipart/form-data' },
+            data: data,
             responseType: 'json',
             auth: {
                 username: this._config.client_username,
