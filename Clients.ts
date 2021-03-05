@@ -61,7 +61,8 @@ export interface ClientListInfo {
     fullname: string,
     displayName: string,
     officeId: number,
-    officeName: string
+    officeName: string,
+    mobileNo: string
 
 }
 export interface DataTableCreate {

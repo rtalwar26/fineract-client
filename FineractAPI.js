@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios = require('axios');
+const FormData = require("form-data");
 class FineractAPI {
     constructor(config) {
         this._config = config;
@@ -17,6 +18,23 @@ class FineractAPI {
             url: `${this._config.client_base_url}/${path}`,
             headers: this.defaultHeaders(),
             data: body,
+            responseType: 'json',
+            auth: {
+                username: this._config.client_username,
+                password: this._config.client_password
+            }
+        });
+    }
+    async post_formdata(path, body, name, description) {
+        var data = new FormData();
+        data.append('name', name);
+        data.append('description', description);
+        data.append('file', body);
+        return axios({
+            method: "post",
+            url: `${this._config.client_base_url}/${path}`,
+            headers: { ...this.defaultHeaders(), 'Content-Type': 'multipart/form-data' },
+            data: data,
             responseType: 'json',
             auth: {
                 username: this._config.client_username,
